@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-papusa-gold: #F59E0B;
+  --color-papusa-gold-hover: #D97706;
+  --color-papusa-gold-active: #B45309;
+  --color-papusa-orange: #EA580C;
+  --color-papusa-cream: #FEF3C7;
+  --color-papusa-warm-white: #FFFBEB;
+  --color-papusa-surface: #FEF9EE;
+  --color-papusa-border: #FDE68A;
+  --color-papusa-brown: #92400E;
+  --color-papusa-brown-light: #A0845C;
+  --color-papusa-dark: #1C1917;
+  --color-papusa-medium: #57534E;
+  --color-papusa-light: #A8A29E;
+  --color-papusa-star-inactive: #D6D3D1;
+  --color-score-high: #16A34A;
+  --color-score-mid: #CA8A04;
+  --color-score-low: #DC2626;
+
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+body {
+  background-color: var(--color-papusa-warm-white);
+  color: var(--color-papusa-dark);
+}
+
+/* Star rating tap animation */
+@keyframes star-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+.star-pop {
+  animation: star-pop 200ms ease;
+}
+
+/* Smooth score transitions */
+.score-transition {
+  transition: color 300ms ease, transform 300ms ease;
+}
+
+/* Card hover */
+.spot-card {
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+
+.spot-card:hover {
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+  transform: translateY(-1px);
+}
+
+/* Share code dashed border */
+.share-code-box {
+  border: 2px dashed var(--color-papusa-border);
+  background: var(--color-papusa-cream);
+  border-radius: 12px;
+}
+
+/* Bottom sheet overlay */
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+/* Slide up animation for modals */
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.slide-up {
+  animation: slide-up 300ms ease;
+}
+
+/* Expand animation for leaderboard details */
+@keyframes expand {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 200px; opacity: 1; }
+}
+
+.expand-in {
+  animation: expand 300ms ease;
+  overflow: hidden;
+}
