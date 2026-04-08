@@ -1,10 +1,28 @@
 # Issues Log
 
-_Last updated: 2026-04-07_
+_Last updated: 2026-04-08_
 
 ---
 
 ## Open Issues
+
+### [UAT-007] New users are never prompted for a display name before create/join
+- **Severity**: medium
+- **Complexity**: Low — add a name input step between OTP verification and session form
+- **Prevalence**: Every new user
+- **Priority**: Medium
+- **Page/Section**: `/` (home page, both create and join flows)
+- **Discovered**: 2026-04-08
+- **Status**: open
+- **Description**: After OTP verification, `useAuth().verifyOtp()` returns `isNewUser: true` when the user has no `display_name` in their profile, but `app/page.tsx` never checks this flag. The page only checks `needsAuth` (`!user`), so once authenticated, new users go straight to the session name/code input. Their participant name defaults to "Anonymous" (line 40/57 in `page.tsx`). The `updateProfile` function from `useAuth` is imported but never called. Should add a name entry step when `isNewUser` is true or `displayName` is empty.
+- **Steps to Reproduce**:
+  1. Clear cookies, go to localhost:3000
+  2. Click "Start New Session" or "Join Session"
+  3. Enter a phone number that has never been used before
+  4. Complete OTP verification
+  5. Observe: no name prompt — goes directly to session name/code input
+  6. Create/join session — participant appears as "Anonymous"
+- **Fix**: _(pending)_
 
 ### [UAT-006] Custom-added spots are not visible to other sessions
 - **Severity**: low
