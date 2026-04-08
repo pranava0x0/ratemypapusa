@@ -26,6 +26,21 @@
 body {
   background-color: var(--color-pupusa-warm-white);
   color: var(--color-pupusa-dark);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safe area padding for notch/dynamic island iPhones */
+.safe-area-padding {
+  padding-top: env(safe-area-inset-top, 0);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Ensure touch targets are at least 44px on mobile */
+@media (pointer: coarse) {
+  button, a[role="button"], [role="tab"] {
+    min-height: 44px;
+  }
 }
 
 /* Star rating tap animation */

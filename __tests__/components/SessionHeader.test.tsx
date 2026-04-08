@@ -21,12 +21,12 @@ describe('SessionHeader', () => {
     expect(screen.getByText('Test Session')).toBeInTheDocument()
   })
 
-  it('displays participant count', () => {
+  it('displays participant names', () => {
     render(<SessionHeader {...defaultProps} />)
-    expect(screen.getByText('1 taster')).toBeInTheDocument()
+    expect(screen.getByText('Alice')).toBeInTheDocument()
   })
 
-  it('pluralizes participant count correctly', () => {
+  it('displays multiple participant names joined with &', () => {
     render(
       <SessionHeader
         {...defaultProps}
@@ -36,11 +36,36 @@ describe('SessionHeader', () => {
         ]}
       />
     )
-    expect(screen.getByText('2 tasters')).toBeInTheDocument()
+    expect(screen.getByText('Alice & Bob')).toBeInTheDocument()
   })
 
   it('renders optional back link when backHref is provided', () => {
     render(<SessionHeader {...defaultProps} backHref="/some-page" />)
     expect(screen.getByText('Back').closest('a')).toHaveAttribute('href', '/some-page')
+  })
+
+  it('displays the share code', () => {
+    render(<SessionHeader {...defaultProps} />)
+    expect(screen.getByText('ABC12')).toBeInTheDocument()
+  })
+
+  it('renders copy and share buttons', () => {
+    render(<SessionHeader {...defaultProps} />)
+    expect(screen.getByText('Copy')).toBeInTheDocument()
+    expect(screen.getByText('Share')).toBeInTheDocument()
+  })
+
+  it('shows avatar initials for each participant', () => {
+    render(
+      <SessionHeader
+        {...defaultProps}
+        participants={[
+          { id: '1', session_id: 's1', name: 'Alice', created_at: '2024-01-01' },
+          { id: '2', session_id: 's1', name: 'Bob', created_at: '2024-01-01' },
+        ]}
+      />
+    )
+    expect(screen.getByText('A')).toBeInTheDocument()
+    expect(screen.getByText('B')).toBeInTheDocument()
   })
 })

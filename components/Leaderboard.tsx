@@ -178,10 +178,15 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
     )
   }
 
+  const tasterNames =
+    participants.length <= 3
+      ? participants.map((p) => p.name).join(' & ')
+      : `${participants.slice(0, 2).map((p) => p.name).join(', ')} & ${participants.length - 2} more`
+
   return (
     <div>
       <p className="text-sm text-pupusa-medium mb-4">
-        Ranked by average across {participants.length} taster{participants.length !== 1 ? 's' : ''}
+        What {tasterNames} like best
       </p>
       <div className="space-y-3">
         {ratedSpots.map((agg, index) => renderSpotCard(agg, index + 1))}

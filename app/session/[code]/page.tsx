@@ -7,7 +7,6 @@ import { useSpots } from '@/lib/hooks/useSpots'
 import { useRatings } from '@/lib/hooks/useRatings'
 import { useLeaderboard } from '@/lib/hooks/useLeaderboard'
 import SessionHeader from '@/components/SessionHeader'
-import ShareCode from '@/components/ShareCode'
 import SpotCard from '@/components/SpotCard'
 import AddSpotModal from '@/components/AddSpotModal'
 import Leaderboard from '@/components/Leaderboard'
@@ -187,10 +186,8 @@ export default function SessionPage() {
         participants={participants}
       />
 
-      <ShareCode code={code} />
-
       {/* Tab bar */}
-      <div className="mt-6 flex rounded-xl bg-pupusa-cream p-1">
+      <div className="mt-4 flex rounded-xl bg-pupusa-cream p-1">
         <button
           onClick={() => setTab('spots')}
           className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-colors ${
