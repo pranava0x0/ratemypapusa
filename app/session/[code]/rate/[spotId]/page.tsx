@@ -95,7 +95,7 @@ export default function RateSpotPage() {
           <p className="text-4xl mb-3">😕</p>
           <p className="text-lg font-semibold text-pupusa-brown">Spot not found</p>
           <p className="mt-1 text-sm text-pupusa-medium">
-            This spot doesn&apos;t exist or the session is invalid
+            This spot doesn&apos;t exist or the crawl is invalid
           </p>
           <button
             onClick={() => router.push(`/session/${code}`)}

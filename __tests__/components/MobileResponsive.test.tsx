@@ -16,7 +16,7 @@ describe('Mobile responsiveness', () => {
     it('renders participant names and share code in compact layout', () => {
       render(
         <SessionHeader
-          sessionName="Saturday Pupusa Crawl"
+          crawlName="Saturday Pupusa Crawl"
           shareCode="ABC12"
           participants={participants}
         />
@@ -27,10 +27,10 @@ describe('Mobile responsiveness', () => {
       expect(screen.getByText('Share')).toBeInTheDocument()
     })
 
-    it('truncates long session names', () => {
+    it('truncates long crawl names', () => {
       render(
         <SessionHeader
-          sessionName="A Very Long Session Name That Might Overflow On Small Screens"
+          crawlName="A Very Long Session Name That Might Overflow On Small Screens"
           shareCode="XYZ99"
           participants={participants}
         />
@@ -48,7 +48,7 @@ describe('Mobile responsiveness', () => {
       }))
       render(
         <SessionHeader
-          sessionName="Big Group"
+          crawlName="Big Group"
           shareCode="GRP01"
           participants={manyParticipants}
         />

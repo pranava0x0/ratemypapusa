@@ -3,7 +3,7 @@ import SessionHeader from '@/components/SessionHeader'
 
 describe('SessionHeader', () => {
   const defaultProps = {
-    sessionName: 'Test Session',
+    crawlName: 'Test Crawl',
     shareCode: 'ABC12',
     participants: [
       { id: '1', session_id: 's1', name: 'Alice', created_at: '2024-01-01' },
@@ -16,9 +16,9 @@ describe('SessionHeader', () => {
     expect(homeLink).toHaveAttribute('href', '/')
   })
 
-  it('displays session name', () => {
+  it('displays crawl name', () => {
     render(<SessionHeader {...defaultProps} />)
-    expect(screen.getByText('Test Session')).toBeInTheDocument()
+    expect(screen.getByText('Test Crawl')).toBeInTheDocument()
   })
 
   it('displays participant names', () => {

@@ -102,7 +102,7 @@ export default function SessionPage() {
       <div className="flex min-h-[60dvh] items-center justify-center">
         <div className="text-center">
           <p className="text-4xl mb-3 animate-pulse">🫓</p>
-          <p className="text-pupusa-medium">Loading session...</p>
+          <p className="text-pupusa-medium">Loading crawl...</p>
         </div>
       </div>
     )
@@ -114,7 +114,7 @@ export default function SessionPage() {
       <div className="flex min-h-[60dvh] items-center justify-center">
         <div className="text-center">
           <p className="text-4xl mb-3">😕</p>
-          <p className="text-lg font-semibold text-pupusa-brown">Session not found</p>
+          <p className="text-lg font-semibold text-pupusa-brown">Crawl not found</p>
           <p className="mt-1 text-sm text-pupusa-medium">
             Check the code and try again
           </p>
@@ -161,7 +161,7 @@ export default function SessionPage() {
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
 
       <SessionHeader
-        sessionName={session.name}
+        crawlName={session.name}
         shareCode={code}
         participants={participants}
       />

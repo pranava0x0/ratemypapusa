@@ -6,14 +6,14 @@ import Image from 'next/image'
 import { Participant } from '@/lib/types'
 
 interface SessionHeaderProps {
-  sessionName: string
+  crawlName: string
   shareCode: string
   participants: Participant[]
   backHref?: string
 }
 
 export default function SessionHeader({
-  sessionName,
+  crawlName,
   shareCode,
   participants,
   backHref,
@@ -31,7 +31,7 @@ export default function SessionHeader({
     const url = `${window.location.origin}/session/${shareCode}`
     if (navigator.share) {
       await navigator.share({
-        title: 'Join my RateMyPupusa session',
+        title: 'Join my pupusa crawl',
         text: `Rate pupusas with me! Code: ${shareCode}`,
         url,
       })
@@ -65,7 +65,7 @@ export default function SessionHeader({
             />
             <span>RateMyPupusa</span>
           </Link>
-          <h1 className="text-2xl font-bold text-pupusa-brown truncate">{sessionName}</h1>
+          <h1 className="text-2xl font-bold text-pupusa-brown truncate">{crawlName}</h1>
         </div>
       </div>
 

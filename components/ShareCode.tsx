@@ -20,7 +20,7 @@ export default function ShareCode({ code }: ShareCodeProps) {
     const url = `${window.location.origin}/session/${code}`
     if (navigator.share) {
       await navigator.share({
-        title: 'Join my RateMyPupusa session',
+        title: 'Join my pupusa crawl',
         text: `Rate pupusas with me! Code: ${code}`,
         url,
       })
@@ -32,7 +32,7 @@ export default function ShareCode({ code }: ShareCodeProps) {
   return (
     <div className="share-code-box px-6 py-4 text-center">
       <p className="text-xs font-medium text-pupusa-medium mb-2 uppercase tracking-wider">
-        Session Code
+        Crawl Code
       </p>
       <p className="font-mono text-[28px] font-semibold tracking-[0.15em] text-pupusa-brown">
         {code}

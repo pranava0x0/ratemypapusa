@@ -17,7 +17,7 @@ export default function Home() {
   const [mode, setMode] = useState<Mode>('idle')
 
   // Create form
-  const [sessionName, setSessionName] = useState('')
+  const [crawlName, setCrawlName] = useState('')
 
   // Join form
   const [joinCode, setJoinCode] = useState('')
@@ -33,16 +33,16 @@ export default function Home() {
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!sessionName.trim()) return
+    if (!crawlName.trim()) return
     setLoading(true)
     setError(null)
 
     const name = displayName || 'Anonymous'
-    const code = await createSession(sessionName.trim(), name, undefined, user?.id)
+    const code = await createSession(crawlName.trim(), name, undefined, user?.id)
     if (code) {
       router.push(`/session/${code}`)
     } else {
-      setError('Failed to create session. Please try again.')
+      setError('Failed to create crawl. Please try again.')
       setLoading(false)
     }
   }
@@ -91,13 +91,13 @@ export default function Home() {
             onClick={() => setMode('create')}
             className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover transition-colors"
           >
-            Start New Session
+            Start New Crawl
           </button>
           <button
             onClick={() => setMode('join')}
             className="w-full rounded-2xl border-2 border-pupusa-border bg-transparent py-4 text-lg font-semibold text-pupusa-brown hover:bg-pupusa-cream transition-colors"
           >
-            Join Session
+            Join a Crawl
           </button>
         </div>
       )}
@@ -115,14 +115,14 @@ export default function Home() {
                 </p>
               )}
               <div>
-                <label htmlFor="session-name" className="block text-sm font-medium text-pupusa-brown mb-1">
-                  Session Name
+                <label htmlFor="crawl-name" className="block text-sm font-medium text-pupusa-brown mb-1">
+                  Crawl Name
                 </label>
                 <input
-                  id="session-name"
+                  id="crawl-name"
                   type="text"
-                  value={sessionName}
-                  onChange={(e) => setSessionName(e.target.value)}
+                  value={crawlName}
+                  onChange={(e) => setCrawlName(e.target.value)}
                   placeholder="e.g., Saturday Pupusa Crawl"
                   className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
                   required
@@ -134,7 +134,7 @@ export default function Home() {
                 disabled={loading}
                 className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
               >
-                {loading ? 'Creating...' : 'Create Session'}
+                {loading ? 'Creating...' : 'Create Crawl'}
               </button>
             </form>
           )}
@@ -163,7 +163,7 @@ export default function Home() {
               )}
               <div>
                 <label htmlFor="join-code" className="block text-sm font-medium text-pupusa-brown mb-1">
-                  Session Code
+                  Crawl Code
                 </label>
                 <input
                   id="join-code"
@@ -182,7 +182,7 @@ export default function Home() {
                 disabled={loading}
                 className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
               >
-                {loading ? 'Joining...' : 'Join Session'}
+                {loading ? 'Joining...' : 'Join Crawl'}
               </button>
             </form>
           )}
