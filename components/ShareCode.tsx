@@ -11,21 +11,29 @@ export default function ShareCode({ code }: ShareCodeProps) {
 
   const handleCopy = async () => {
     const url = `${window.location.origin}/session/${code}`
-    await navigator.clipboard.writeText(url)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // Clipboard API unavailable (non-HTTPS, iframe, unfocused tab)
+    }
   }
 
   const handleShare = async () => {
     const url = `${window.location.origin}/session/${code}`
-    if (navigator.share) {
-      await navigator.share({
-        title: 'Join my pupusa crawl',
-        text: `Rate pupusas with me! Code: ${code}`,
-        url,
-      })
-    } else {
-      handleCopy()
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Join my pupusa crawl',
+          text: `Rate pupusas with me! Code: ${code}`,
+          url,
+        })
+      } else {
+        await handleCopy()
+      }
+    } catch {
+      // User dismissed share sheet (AbortError) or share unavailable
     }
   }
 

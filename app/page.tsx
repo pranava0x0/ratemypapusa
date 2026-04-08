@@ -22,14 +22,30 @@ export default function Home() {
   // Join form
   const [joinCode, setJoinCode] = useState('')
 
+  const [nameInput, setNameInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   // Whether the user needs to authenticate
   const needsAuth = !authLoading && !user
 
+  // Whether the user needs to set a display name
+  const needsName = !authLoading && !!user && !profile?.display_name
+
   // Derive display name from profile
   const displayName = profile?.display_name || ''
+
+  const handleSetName = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!nameInput.trim()) return
+    setLoading(true)
+    setError(null)
+    const { error: err } = await updateProfile(nameInput.trim())
+    setLoading(false)
+    if (err) {
+      setError(err)
+    }
+  }
 
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -107,6 +123,34 @@ export default function Home() {
         <div className="w-full space-y-4">
           {needsAuth ? (
             <PhoneAuth onSendOtp={signIn} onVerifyOtp={verifyOtp} />
+          ) : needsName ? (
+            <form onSubmit={handleSetName} className="space-y-4 fade-expand">
+              <p className="text-sm text-pupusa-medium text-center">
+                What should we call you?
+              </p>
+              <div>
+                <label htmlFor="your-name" className="block text-sm font-medium text-pupusa-brown mb-1">
+                  Your Name
+                </label>
+                <input
+                  id="your-name"
+                  type="text"
+                  value={nameInput}
+                  onChange={(e) => setNameInput(e.target.value)}
+                  placeholder="e.g., Maria"
+                  className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
+                  required
+                  autoFocus
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={loading || !nameInput.trim()}
+                className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
+              >
+                {loading ? 'Saving...' : 'Continue'}
+              </button>
+            </form>
           ) : (
             <form onSubmit={handleCreate} className="space-y-4 fade-expand">
               {displayName && (
@@ -154,6 +198,34 @@ export default function Home() {
         <div className="w-full space-y-4">
           {needsAuth ? (
             <PhoneAuth onSendOtp={signIn} onVerifyOtp={verifyOtp} />
+          ) : needsName ? (
+            <form onSubmit={handleSetName} className="space-y-4 fade-expand">
+              <p className="text-sm text-pupusa-medium text-center">
+                What should we call you?
+              </p>
+              <div>
+                <label htmlFor="your-name-join" className="block text-sm font-medium text-pupusa-brown mb-1">
+                  Your Name
+                </label>
+                <input
+                  id="your-name-join"
+                  type="text"
+                  value={nameInput}
+                  onChange={(e) => setNameInput(e.target.value)}
+                  placeholder="e.g., Maria"
+                  className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
+                  required
+                  autoFocus
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={loading || !nameInput.trim()}
+                className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
+              >
+                {loading ? 'Saving...' : 'Continue'}
+              </button>
+            </form>
           ) : (
             <form onSubmit={handleJoin} className="space-y-4 fade-expand">
               {displayName && (

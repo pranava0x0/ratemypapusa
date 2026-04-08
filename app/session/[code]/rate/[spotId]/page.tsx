@@ -170,15 +170,15 @@ export default function RateSpotPage() {
               </div>
 
               {/* Current user's rating */}
-              <div className="flex items-center justify-between">
+              <div>
                 <StarRating
                   value={myScore}
                   onChange={(score) => handleRate(factor.key, score)}
                   size="lg"
                 />
-                <span className="text-sm text-pupusa-light">
+                <p className="mt-1 text-sm text-pupusa-light">
                   {myScore > 0 ? `You: ${myScore}/5` : 'Tap to rate'}
-                </span>
+                </p>
               </div>
 
               {/* Other participants' ratings */}
@@ -187,12 +187,15 @@ export default function RateSpotPage() {
                 return (
                   <div
                     key={p.id}
-                    className="flex items-center justify-between mt-2 pt-2 border-t border-pupusa-border/50"
+                    className="mt-2 pt-2 border-t border-pupusa-border/50"
                   >
-                    <StarRating value={theirScore} readonly size="md" />
-                    <span className="text-sm text-pupusa-light">
-                      {theirScore > 0 ? `${p.name}: ${theirScore}/5` : `${p.name}: —`}
-                    </span>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-pupusa-medium">{p.name}</span>
+                      <span className="text-sm text-pupusa-light">
+                        {theirScore > 0 ? `${theirScore}/5` : '—'}
+                      </span>
+                    </div>
+                    <StarRating value={theirScore} readonly size="sm" />
                   </div>
                 )
               })}

@@ -6,22 +6,19 @@ _Last updated: 2026-04-08_
 
 ## Open Issues
 
-### [UAT-007] New users are never prompted for a display name before create/join
-- **Severity**: medium
-- **Complexity**: Low — add a name input step between OTP verification and session form
-- **Prevalence**: Every new user
-- **Priority**: Medium
-- **Page/Section**: `/` (home page, both create and join flows)
+### [UAT-010] Next.js Image component warns about aspect ratio on pupusa.png
+- **Severity**: low
+- **Complexity**: Low — add `style={{ height: 'auto' }}` to both Image components
+- **Prevalence**: Every page load (console warning)
+- **Priority**: Low — cosmetic console warning, no visual impact
+- **Page/Section**: `/` (hero image) and `/session/[code]` (header logo)
 - **Discovered**: 2026-04-08
 - **Status**: open
-- **Description**: After OTP verification, `useAuth().verifyOtp()` returns `isNewUser: true` when the user has no `display_name` in their profile, but `app/page.tsx` never checks this flag. The page only checks `needsAuth` (`!user`), so once authenticated, new users go straight to the session name/code input. Their participant name defaults to "Anonymous" (line 40/57 in `page.tsx`). The `updateProfile` function from `useAuth` is imported but never called. Should add a name entry step when `isNewUser` is true or `displayName` is empty.
+- **Description**: `app/page.tsx:66` uses `<Image src="/pupusa.png" width={240} height={150}>` and `SessionHeader.tsx:60` uses `width={24} height={15}`. Next.js 16 warns: "Image with src '/pupusa.png' has either width or height modified, but not the other. Include 'width: auto' or 'height: auto' to maintain aspect ratio." The image renders correctly but logs a console warning on every page load.
 - **Steps to Reproduce**:
-  1. Clear cookies, go to localhost:3000
-  2. Click "Start New Session" or "Join Session"
-  3. Enter a phone number that has never been used before
-  4. Complete OTP verification
-  5. Observe: no name prompt — goes directly to session name/code input
-  6. Create/join session — participant appears as "Anonymous"
+  1. Open any page with pupusa.png
+  2. Check browser console
+  3. See repeated warning about aspect ratio
 - **Fix**: _(pending)_
 
 ### [UAT-006] Custom-added spots are not visible to other sessions
@@ -42,6 +39,39 @@ _Last updated: 2026-04-08_
 ---
 
 ## Resolved Issues
+
+### [UAT-008] "Tap to rate" / "You: X/5" text wraps awkwardly on narrow viewports (375px–393px)
+- **Severity**: medium
+- **Page/Section**: `/session/[code]/rate/[spotId]` > rating factor rows
+- **Discovered**: 2026-04-08
+- **Resolved**: 2026-04-08
+- **Status**: fixed
+- **Root Cause**: Code bug — stars and hint text shared a single `flex justify-between` row, leaving insufficient space for text at narrow widths.
+- **Fix**: Changed layout to stack hint text ("Tap to rate" / "You: X/5") below the stars instead of beside them. Also refactored other-participant rows to show name+score on one line with stars below. Eliminates wrapping at all viewport widths.
+
+---
+
+### [UAT-009] Clipboard writeText throws unhandled rejection when permission denied
+- **Severity**: medium
+- **Page/Section**: `/session/[code]` > Copy/Share buttons in `SessionHeader.tsx` and `ShareCode.tsx`
+- **Discovered**: 2026-04-08
+- **Resolved**: 2026-04-08
+- **Status**: fixed
+- **Root Cause**: Code bug — `navigator.clipboard.writeText()` and `navigator.share()` called without try/catch.
+- **Fix**: Wrapped both `handleCopy()` and `handleShare()` in try/catch in `SessionHeader.tsx` and `ShareCode.tsx`. Clipboard failures (NotAllowedError) and share dismissals (AbortError) are now silently caught.
+
+---
+
+### [UAT-007] New users are never prompted for a display name before create/join
+- **Severity**: medium
+- **Page/Section**: `/` (home page, both create and join flows)
+- **Discovered**: 2026-04-08
+- **Resolved**: 2026-04-08
+- **Status**: fixed
+- **Root Cause**: Code bug — `app/page.tsx` never checked for missing display name after OTP verification. `updateProfile` was imported but never called.
+- **Fix**: Added `needsName` check (`user` exists but `profile.display_name` is empty). Both create and join flows now show a "What should we call you?" name input step between OTP verification and the session form. Calls `updateProfile()` to save the name, then proceeds to the session form with greeting.
+
+---
 
 ### [UAT-001] Leaderboard shows medal badges and rank numbers for unrated spots
 - **Severity**: low

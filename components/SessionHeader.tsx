@@ -22,21 +22,29 @@ export default function SessionHeader({
 
   const handleCopy = async () => {
     const url = `${window.location.origin}/session/${shareCode}`
-    await navigator.clipboard.writeText(url)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    try {
+      await navigator.clipboard.writeText(url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // Clipboard API unavailable (non-HTTPS, iframe, unfocused tab)
+    }
   }
 
   const handleShare = async () => {
     const url = `${window.location.origin}/session/${shareCode}`
-    if (navigator.share) {
-      await navigator.share({
-        title: 'Join my pupusa crawl',
-        text: `Rate pupusas with me! Code: ${shareCode}`,
-        url,
-      })
-    } else {
-      handleCopy()
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Join my pupusa crawl',
+          text: `Rate pupusas with me! Code: ${shareCode}`,
+          url,
+        })
+      } else {
+        await handleCopy()
+      }
+    } catch {
+      // User dismissed share sheet (AbortError) or share unavailable
     }
   }
 
