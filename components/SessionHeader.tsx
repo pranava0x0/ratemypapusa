@@ -31,6 +31,10 @@ export default function SessionHeader({
       )}
       <div className="flex items-start justify-between gap-3">
         <div>
+          <Link href="/" className="inline-flex items-center gap-1 text-sm text-papusa-medium hover:text-papusa-brown mb-2">
+            <span>🫓</span>
+            <span>RateMyPapusa</span>
+          </Link>
           <h1 className="text-2xl font-bold text-papusa-brown">{sessionName}</h1>
           <div className="mt-1 flex items-center gap-2">
             <span className="inline-flex items-center gap-1 rounded-full bg-papusa-cream px-2.5 py-0.5 text-xs font-medium text-papusa-brown">

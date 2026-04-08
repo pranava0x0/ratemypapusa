@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useEffect, useState, useCallback } from 'react'
+import { useParams, useSearchParams, useRouter } from 'next/navigation'
 import { useSession } from '@/lib/hooks/useSession'
 import { useSpots } from '@/lib/hooks/useSpots'
 import { useRatings } from '@/lib/hooks/useRatings'
@@ -18,8 +18,10 @@ type Tab = 'spots' | 'leaderboard'
 export default function SessionPage() {
   const params = useParams()
   const searchParams = useSearchParams()
+  const router = useRouter()
   const code = params.code as string
   const nameParam = searchParams.get('name')
+  const tabParam = searchParams.get('tab')
 
   const {
     session,
@@ -34,7 +36,19 @@ export default function SessionPage() {
   const { ratings, loading: ratingsLoading } = useRatings(session?.id)
   const leaderboard = useLeaderboard(ratings, spots)
 
-  const [tab, setTab] = useState<Tab>('spots')
+  const [tab, setTabState] = useState<Tab>(tabParam === 'leaderboard' ? 'leaderboard' : 'spots')
+
+  const setTab = useCallback((newTab: Tab) => {
+    setTabState(newTab)
+    const params = new URLSearchParams(window.location.search)
+    if (newTab === 'leaderboard') {
+      params.set('tab', 'leaderboard')
+    } else {
+      params.delete('tab')
+    }
+    const qs = params.toString()
+    router.replace(`/session/${code}${qs ? `?${qs}` : ''}`, { scroll: false })
+  }, [code, router])
   const [showAddSpot, setShowAddSpot] = useState(false)
   const [joinName, setJoinName] = useState('')
   const [joining, setJoining] = useState(false)

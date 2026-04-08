@@ -43,7 +43,8 @@ export default function RateSpotPage() {
     if (!currentParticipant) return
     const success = await submitRating(currentParticipant.id, spotId, factor, score)
     if (success) {
-      addToast(`${factor} rated!`, 'success')
+      const label = RATING_FACTORS.find((f) => f.key === factor)?.label ?? factor
+      addToast(`${label} rated!`, 'success')
     }
   }
 
@@ -76,12 +77,16 @@ export default function RateSpotPage() {
     return (
       <div className="flex min-h-[60dvh] items-center justify-center">
         <div className="text-center">
-          <p className="text-lg font-semibold text-papusa-brown">Not found</p>
+          <p className="text-4xl mb-3">😕</p>
+          <p className="text-lg font-semibold text-papusa-brown">Spot not found</p>
+          <p className="mt-1 text-sm text-papusa-medium">
+            This spot doesn&apos;t exist or the session is invalid
+          </p>
           <button
-            onClick={() => router.back()}
-            className="mt-3 text-sm text-papusa-medium hover:text-papusa-brown"
+            onClick={() => router.push(`/session/${code}`)}
+            className="mt-4 inline-block rounded-xl bg-papusa-gold px-6 py-2.5 text-sm font-semibold text-papusa-dark"
           >
-            Go back
+            Go Back
           </button>
         </div>
       </div>
