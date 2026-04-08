@@ -182,12 +182,21 @@ export function useSession(shareCode?: string) {
     async (name: string, userId?: string): Promise<boolean> => {
       if (!session) return false
 
-      // Check if already joined
+      // Check if already joined (by localStorage or by user_id)
       const storedId = getStoredParticipantId(session.share_code)
       if (storedId) {
         const existing = participants.find((p) => p.id === storedId)
         if (existing) {
           setCurrentParticipant(existing)
+          return true
+        }
+      }
+
+      if (userId) {
+        const byUserId = participants.find((p) => p.user_id === userId)
+        if (byUserId) {
+          storeParticipantId(session.share_code, byUserId.id)
+          setCurrentParticipant(byUserId)
           return true
         }
       }

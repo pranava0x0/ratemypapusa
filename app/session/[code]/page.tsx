@@ -59,9 +59,9 @@ export default function SessionPage() {
 
   const displayName = profile?.display_name || ''
 
-  // Auto-join when authenticated (via URL name param or profile name)
+  // Auto-join when authenticated and session is loaded (not loading)
   useEffect(() => {
-    if (session && !currentParticipant && user && !joining) {
+    if (session && !currentParticipant && !sessionLoading && user && !joining) {
       const name = nameParam || displayName || 'Anonymous'
       const doJoin = async () => {
         setJoining(true)
@@ -73,7 +73,7 @@ export default function SessionPage() {
       }
       doJoin()
     }
-  }, [session, currentParticipant, user, nameParam, displayName, joining, joinSession, addToast])
+  }, [session, currentParticipant, sessionLoading, user, nameParam, displayName, joining, joinSession, addToast])
 
   // Track new participants for toast
   useEffect(() => {
