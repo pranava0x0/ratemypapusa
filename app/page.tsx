@@ -123,7 +123,7 @@ export default function Home() {
                   type="text"
                   value={sessionName}
                   onChange={(e) => setSessionName(e.target.value)}
-                  placeholder="e.g., Saturday Pupusa Tour"
+                  placeholder="e.g., Saturday Pupusa Crawl"
                   className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
                   required
                   autoFocus
