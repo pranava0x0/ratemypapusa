@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Participant } from '@/lib/types'
 
 interface SessionHeaderProps {
@@ -54,8 +55,14 @@ export default function SessionHeader({
       )}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <Link href="/" className="inline-flex items-center gap-1 text-sm text-pupusa-medium hover:text-pupusa-brown mb-1">
-            <span>🫓</span>
+          <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-pupusa-medium hover:text-pupusa-brown mb-1">
+            <Image
+              src="/pupusa.png"
+              alt="RateMyPupusa"
+              width={24}
+              height={15}
+              className="inline-block"
+            />
             <span>RateMyPupusa</span>
           </Link>
           <h1 className="text-2xl font-bold text-pupusa-brown truncate">{sessionName}</h1>

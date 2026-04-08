@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { useSession } from '@/lib/hooks/useSession'
 
 type Mode = 'idle' | 'create' | 'join'
@@ -46,7 +47,14 @@ export default function Home() {
     <div className="flex min-h-[80dvh] flex-col items-center justify-center">
       {/* Hero */}
       <div className="mb-10 text-center">
-        <p className="text-5xl mb-3">🫓</p>
+        <Image
+          src="/pupusa.png"
+          alt="A steaming pupusa with curtido and salsa"
+          width={240}
+          height={150}
+          className="mx-auto mb-4"
+          priority
+        />
         <h1 className="text-4xl font-bold text-pupusa-brown tracking-tight">
           RateMyPupusa
         </h1>
