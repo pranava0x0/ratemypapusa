@@ -12,6 +12,7 @@ export default function Home() {
   const [mode, setMode] = useState<Mode>('idle')
   const [sessionName, setSessionName] = useState('')
   const [yourName, setYourName] = useState('')
+  const [partnerName, setPartnerName] = useState('')
   const [joinCode, setJoinCode] = useState('')
   const [joinName, setJoinName] = useState('')
   const [loading, setLoading] = useState(false)
@@ -23,7 +24,7 @@ export default function Home() {
     setLoading(true)
     setError(null)
 
-    const code = await createSession(sessionName.trim(), yourName.trim())
+    const code = await createSession(sessionName.trim(), yourName.trim(), partnerName.trim() || undefined)
     if (code) {
       router.push(`/session/${code}`)
     } else {
@@ -108,6 +109,19 @@ export default function Home() {
               placeholder="e.g., Pranav"
               className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 text-papusa-dark placeholder:text-papusa-light focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
               required
+            />
+          </div>
+          <div>
+            <label htmlFor="partner-name" className="block text-sm font-medium text-papusa-brown mb-1">
+              Friend&apos;s Name <span className="text-papusa-light font-normal">(optional)</span>
+            </label>
+            <input
+              id="partner-name"
+              type="text"
+              value={partnerName}
+              onChange={(e) => setPartnerName(e.target.value)}
+              placeholder="e.g., Maria"
+              className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 text-papusa-dark placeholder:text-papusa-light focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
             />
           </div>
           <button

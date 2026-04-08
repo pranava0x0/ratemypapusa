@@ -101,7 +101,7 @@ export function useSession(shareCode?: string) {
   }, [shareCode])
 
   const createSession = useCallback(
-    async (sessionName: string, creatorName: string): Promise<string | null> => {
+    async (sessionName: string, creatorName: string, partnerName?: string): Promise<string | null> => {
       let attempts = 0
       while (attempts < 3) {
         const code = generateShareCode()
@@ -134,10 +134,28 @@ export function useSession(shareCode?: string) {
           return null
         }
 
+        const allParticipants = [participantData]
+
+        // Add partner as second participant if provided
+        if (partnerName) {
+          const { data: partnerData, error: partnerError } = await supabase
+            .from('participants')
+            .insert({ session_id: sessionData.id, name: partnerName })
+            .select()
+            .single()
+
+          if (partnerError) {
+            setError(partnerError.message)
+            return null
+          }
+
+          allParticipants.push(partnerData)
+        }
+
         storeParticipantId(code, participantData.id)
         setSession(sessionData)
         setCurrentParticipant(participantData)
-        setParticipants([participantData])
+        setParticipants(allParticipants)
 
         return code
       }
