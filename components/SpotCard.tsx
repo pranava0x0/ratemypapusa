@@ -36,23 +36,23 @@ export default function SpotCard({
 
   return (
     <Link href={`/session/${sessionCode}/rate/${spot.id}`}>
-      <div className="spot-card rounded-2xl border border-papusa-border bg-papusa-surface p-4 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+      <div className="spot-card rounded-2xl border border-pupusa-border bg-pupusa-surface p-4 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <h3 className="text-lg font-semibold text-papusa-brown truncate">
+            <h3 className="text-lg font-semibold text-pupusa-brown truncate">
               {spot.name}
             </h3>
             {spot.address && (
-              <p className="mt-0.5 text-sm text-papusa-medium truncate">
+              <p className="mt-0.5 text-sm text-pupusa-medium truncate">
                 {spot.address}
               </p>
             )}
             <div className="mt-2 flex items-center gap-3">
-              <span className="text-xs text-papusa-medium">
+              <span className="text-xs text-pupusa-medium">
                 You: {ratedCount}/{totalFactors}
               </span>
               {uniqueRaters > 0 && (
-                <span className="text-xs text-papusa-light">
+                <span className="text-xs text-pupusa-light">
                   {uniqueRaters} rater{uniqueRaters !== 1 ? 's' : ''}
                 </span>
               )}
@@ -67,7 +67,7 @@ export default function SpotCard({
                 <StarRating value={Math.round(avgScore)} readonly size="sm" />
               </>
             ) : (
-              <span className="text-sm text-papusa-light">No ratings</span>
+              <span className="text-sm text-pupusa-light">No ratings</span>
             )}
           </div>
         </div>

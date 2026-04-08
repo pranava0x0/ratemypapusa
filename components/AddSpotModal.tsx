@@ -33,10 +33,10 @@ export default function AddSpotModal({ open, onClose, onAdd }: AddSpotModalProps
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-papusa-brown">Add a Spot</h2>
+          <h2 className="text-xl font-bold text-pupusa-brown">Add a Spot</h2>
           <button
             onClick={onClose}
-            className="rounded-full p-1.5 text-papusa-medium hover:bg-papusa-cream"
+            className="rounded-full p-1.5 text-pupusa-medium hover:bg-pupusa-cream"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -45,7 +45,7 @@ export default function AddSpotModal({ open, onClose, onAdd }: AddSpotModalProps
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="spot-name" className="block text-sm font-medium text-papusa-brown mb-1">
+            <label htmlFor="spot-name" className="block text-sm font-medium text-pupusa-brown mb-1">
               Name *
             </label>
             <input
@@ -54,14 +54,14 @@ export default function AddSpotModal({ open, onClose, onAdd }: AddSpotModalProps
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g., Mi Pupusería Favorita"
-              className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 text-papusa-dark placeholder:text-papusa-light focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
+              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
               required
               minLength={2}
               autoFocus
             />
           </div>
           <div>
-            <label htmlFor="spot-address" className="block text-sm font-medium text-papusa-brown mb-1">
+            <label htmlFor="spot-address" className="block text-sm font-medium text-pupusa-brown mb-1">
               Address (optional)
             </label>
             <input
@@ -70,13 +70,13 @@ export default function AddSpotModal({ open, onClose, onAdd }: AddSpotModalProps
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               placeholder="e.g., 123 Main St NW"
-              className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 text-papusa-dark placeholder:text-papusa-light focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
+              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
             />
           </div>
           <button
             type="submit"
             disabled={loading || name.trim().length < 2}
-            className="w-full rounded-xl bg-papusa-gold py-3 text-base font-semibold text-papusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-papusa-gold-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full rounded-xl bg-pupusa-gold py-3 text-base font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {loading ? 'Adding...' : 'Add Spot'}
           </button>

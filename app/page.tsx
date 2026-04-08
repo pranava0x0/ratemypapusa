@@ -47,10 +47,10 @@ export default function Home() {
       {/* Hero */}
       <div className="mb-10 text-center">
         <p className="text-5xl mb-3">🫓</p>
-        <h1 className="text-4xl font-bold text-papusa-brown tracking-tight">
-          RateMyPapusa
+        <h1 className="text-4xl font-bold text-pupusa-brown tracking-tight">
+          RateMyPupusa
         </h1>
-        <p className="mt-2 text-papusa-medium">
+        <p className="mt-2 text-pupusa-medium">
           Rate pupusa spots in DC with friends
         </p>
       </div>
@@ -66,13 +66,13 @@ export default function Home() {
         <div className="w-full space-y-3">
           <button
             onClick={() => setMode('create')}
-            className="w-full rounded-2xl bg-papusa-gold py-4 text-lg font-semibold text-papusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-papusa-gold-hover transition-colors"
+            className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover transition-colors"
           >
             Start New Session
           </button>
           <button
             onClick={() => setMode('join')}
-            className="w-full rounded-2xl border-2 border-papusa-border bg-transparent py-4 text-lg font-semibold text-papusa-brown hover:bg-papusa-cream transition-colors"
+            className="w-full rounded-2xl border-2 border-pupusa-border bg-transparent py-4 text-lg font-semibold text-pupusa-brown hover:bg-pupusa-cream transition-colors"
           >
             Join Session
           </button>
@@ -83,7 +83,7 @@ export default function Home() {
       {mode === 'create' && (
         <form onSubmit={handleCreate} className="w-full space-y-4">
           <div>
-            <label htmlFor="session-name" className="block text-sm font-medium text-papusa-brown mb-1">
+            <label htmlFor="session-name" className="block text-sm font-medium text-pupusa-brown mb-1">
               Session Name
             </label>
             <input
@@ -92,13 +92,13 @@ export default function Home() {
               value={sessionName}
               onChange={(e) => setSessionName(e.target.value)}
               placeholder="e.g., Saturday Pupusa Crawl"
-              className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 text-papusa-dark placeholder:text-papusa-light focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
+              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
               required
               autoFocus
             />
           </div>
           <div>
-            <label htmlFor="your-name" className="block text-sm font-medium text-papusa-brown mb-1">
+            <label htmlFor="your-name" className="block text-sm font-medium text-pupusa-brown mb-1">
               Your Name
             </label>
             <input
@@ -107,13 +107,13 @@ export default function Home() {
               value={yourName}
               onChange={(e) => setYourName(e.target.value)}
               placeholder="e.g., Pranav"
-              className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 text-papusa-dark placeholder:text-papusa-light focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
+              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
               required
             />
           </div>
           <div>
-            <label htmlFor="partner-name" className="block text-sm font-medium text-papusa-brown mb-1">
-              Friend&apos;s Name <span className="text-papusa-light font-normal">(optional)</span>
+            <label htmlFor="partner-name" className="block text-sm font-medium text-pupusa-brown mb-1">
+              Friend&apos;s Name <span className="text-pupusa-light font-normal">(optional)</span>
             </label>
             <input
               id="partner-name"
@@ -121,20 +121,20 @@ export default function Home() {
               value={partnerName}
               onChange={(e) => setPartnerName(e.target.value)}
               placeholder="e.g., Maria"
-              className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 text-papusa-dark placeholder:text-papusa-light focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
+              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-2xl bg-papusa-gold py-4 text-lg font-semibold text-papusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-papusa-gold-hover disabled:opacity-50 transition-colors"
+            className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
           >
             {loading ? 'Creating...' : 'Create Session'}
           </button>
           <button
             type="button"
             onClick={() => setMode('idle')}
-            className="w-full py-2 text-sm text-papusa-medium hover:text-papusa-brown"
+            className="w-full py-2 text-sm text-pupusa-medium hover:text-pupusa-brown"
           >
             Back
           </button>
@@ -145,7 +145,7 @@ export default function Home() {
       {mode === 'join' && (
         <form onSubmit={handleJoin} className="w-full space-y-4">
           <div>
-            <label htmlFor="join-code" className="block text-sm font-medium text-papusa-brown mb-1">
+            <label htmlFor="join-code" className="block text-sm font-medium text-pupusa-brown mb-1">
               Session Code
             </label>
             <input
@@ -155,13 +155,13 @@ export default function Home() {
               onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
               placeholder="e.g., ABC23"
               maxLength={5}
-              className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 font-mono text-xl tracking-widest text-center text-papusa-dark placeholder:text-papusa-light placeholder:text-base placeholder:tracking-normal placeholder:font-sans focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
+              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 font-mono text-xl tracking-widest text-center text-pupusa-dark placeholder:text-pupusa-light placeholder:text-base placeholder:tracking-normal placeholder:font-sans focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
               required
               autoFocus
             />
           </div>
           <div>
-            <label htmlFor="join-name" className="block text-sm font-medium text-papusa-brown mb-1">
+            <label htmlFor="join-name" className="block text-sm font-medium text-pupusa-brown mb-1">
               Your Name
             </label>
             <input
@@ -170,21 +170,21 @@ export default function Home() {
               value={joinName}
               onChange={(e) => setJoinName(e.target.value)}
               placeholder="e.g., Maria"
-              className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 text-papusa-dark placeholder:text-papusa-light focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
+              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
               required
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-2xl bg-papusa-gold py-4 text-lg font-semibold text-papusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-papusa-gold-hover disabled:opacity-50 transition-colors"
+            className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
           >
             {loading ? 'Joining...' : 'Join Session'}
           </button>
           <button
             type="button"
             onClick={() => setMode('idle')}
-            className="w-full py-2 text-sm text-papusa-medium hover:text-papusa-brown"
+            className="w-full py-2 text-sm text-pupusa-medium hover:text-pupusa-brown"
           >
             Back
           </button>

@@ -65,7 +65,7 @@ _Last updated: 2026-04-07_
 - **Resolved**: 2026-04-07
 - **Status**: fixed
 - **Root Cause**: Code bug — no navigation link back to home existed.
-- **Fix**: Added a home link with the papusa emoji and "RateMyPapusa" text in `SessionHeader.tsx` that links to `/`.
+- **Fix**: Added a home link with the pupusa emoji and "RateMyPupusa" text in `SessionHeader.tsx` that links to `/`.
 
 ---
 

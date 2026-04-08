@@ -20,8 +20,8 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
     return (
       <div className="text-center py-12">
         <p className="text-4xl mb-3">🫓</p>
-        <p className="text-lg font-semibold text-papusa-brown">No spots yet</p>
-        <p className="text-sm text-papusa-medium mt-1">
+        <p className="text-lg font-semibold text-pupusa-brown">No spots yet</p>
+        <p className="text-sm text-pupusa-medium mt-1">
           Add spots and start rating to see the leaderboard
         </p>
       </div>
@@ -59,7 +59,7 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
       <div key={agg.spot.id}>
         <button
           onClick={() => setExpandedId(isExpanded ? null : agg.spot.id)}
-          className="w-full spot-card rounded-2xl border border-papusa-border bg-papusa-surface p-4 shadow-[0_1px_3px_rgba(0,0,0,0.05)] text-left"
+          className="w-full spot-card rounded-2xl border border-pupusa-border bg-pupusa-surface p-4 shadow-[0_1px_3px_rgba(0,0,0,0.05)] text-left"
         >
           <div className="flex items-center gap-3">
             {/* Rank badge */}
@@ -75,17 +75,17 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
                 {rank}
               </div>
             ) : (
-              <div className="flex h-8 w-8 items-center justify-center rounded-full text-sm shrink-0 bg-papusa-cream text-papusa-light">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full text-sm shrink-0 bg-pupusa-cream text-pupusa-light">
                 —
               </div>
             )}
 
             {/* Spot info */}
             <div className="min-w-0 flex-1">
-              <h3 className="font-semibold text-papusa-brown truncate">
+              <h3 className="font-semibold text-pupusa-brown truncate">
                 {agg.spot.name}
               </h3>
-              <p className="text-xs text-papusa-light">
+              <p className="text-xs text-pupusa-light">
                 {isRated
                   ? `${agg.raterCount} rater${agg.raterCount !== 1 ? 's' : ''}`
                   : 'Not yet rated'}
@@ -98,7 +98,7 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
                 {formatScore(score)}
               </span>
               <svg
-                className={`w-4 h-4 text-papusa-light transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                className={`w-4 h-4 text-pupusa-light transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -111,17 +111,17 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
 
         {/* Expanded: per-person, per-factor breakdown */}
         {isExpanded && (
-          <div className="expand-in mt-1 ml-11 mr-1 rounded-xl bg-white border border-papusa-border p-3 space-y-3">
+          <div className="expand-in mt-1 ml-11 mr-1 rounded-xl bg-white border border-pupusa-border p-3 space-y-3">
             {/* Per-person overall scores */}
-            <div className="flex flex-wrap gap-2 pb-2 border-b border-papusa-border/50">
+            <div className="flex flex-wrap gap-2 pb-2 border-b border-pupusa-border/50">
               {participants.map((p) => {
                 const pOverall = getParticipantOverall(p.id, agg.spot.id)
                 return (
                   <div
                     key={p.id}
-                    className="flex items-center gap-1.5 rounded-full bg-papusa-cream px-2.5 py-1"
+                    className="flex items-center gap-1.5 rounded-full bg-pupusa-cream px-2.5 py-1"
                   >
-                    <span className="text-xs font-medium text-papusa-brown">
+                    <span className="text-xs font-medium text-pupusa-brown">
                       {p.name}
                     </span>
                     <span className={`text-xs font-bold ${getScoreColor(pOverall)}`}>
@@ -131,8 +131,8 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
                 )
               })}
               {isRated && (
-                <div className="flex items-center gap-1.5 rounded-full bg-papusa-gold/15 px-2.5 py-1">
-                  <span className="text-xs font-medium text-papusa-brown">Avg</span>
+                <div className="flex items-center gap-1.5 rounded-full bg-pupusa-gold/15 px-2.5 py-1">
+                  <span className="text-xs font-medium text-pupusa-brown">Avg</span>
                   <span className={`text-xs font-bold ${getScoreColor(score)}`}>
                     {formatScore(score)}
                   </span>
@@ -146,7 +146,7 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
               return (
                 <div key={factor.key}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-medium text-papusa-medium">
+                    <span className="text-xs font-medium text-pupusa-medium">
                       {factor.emoji} {factor.label}
                     </span>
                     <span className={`text-xs font-bold ${getScoreColor(factorAvg ?? null)}`}>
@@ -159,10 +159,10 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
                       return (
                         <span
                           key={p.id}
-                          className="inline-flex items-center gap-1 rounded-md bg-papusa-cream/80 px-2 py-0.5 text-xs"
+                          className="inline-flex items-center gap-1 rounded-md bg-pupusa-cream/80 px-2 py-0.5 text-xs"
                         >
-                          <span className="text-papusa-medium">{p.name}:</span>
-                          <span className={`font-semibold ${pScore !== null ? getScoreColor(pScore) : 'text-papusa-light'}`}>
+                          <span className="text-pupusa-medium">{p.name}:</span>
+                          <span className={`font-semibold ${pScore !== null ? getScoreColor(pScore) : 'text-pupusa-light'}`}>
                             {pScore !== null ? pScore : '—'}
                           </span>
                         </span>
@@ -180,7 +180,7 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
 
   return (
     <div>
-      <p className="text-sm text-papusa-medium mb-4">
+      <p className="text-sm text-pupusa-medium mb-4">
         Ranked by average across {participants.length} taster{participants.length !== 1 ? 's' : ''}
       </p>
       <div className="space-y-3">
@@ -188,7 +188,7 @@ export default function Leaderboard({ aggregates, participants, ratings }: Leade
 
         {unratedSpots.length > 0 && (
           <>
-            <p className="text-xs font-semibold uppercase tracking-wider text-papusa-light pt-2">
+            <p className="text-xs font-semibold uppercase tracking-wider text-pupusa-light pt-2">
               Not Yet Rated
             </p>
             {unratedSpots.map((agg) => renderSpotCard(agg, null))}

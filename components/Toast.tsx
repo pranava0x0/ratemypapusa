@@ -16,7 +16,7 @@ interface ToastContainerProps {
 const TOAST_COLORS = {
   success: 'bg-green-600 text-white',
   error: 'bg-red-600 text-white',
-  info: 'bg-papusa-brown text-white',
+  info: 'bg-pupusa-brown text-white',
 }
 
 export function ToastContainer({ toasts, onDismiss }: ToastContainerProps) {

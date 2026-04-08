@@ -83,7 +83,7 @@ export default function RateSpotPage() {
   if (sessionLoading || spotLoading) {
     return (
       <div className="flex min-h-[60dvh] items-center justify-center">
-        <p className="text-papusa-medium animate-pulse">Loading...</p>
+        <p className="text-pupusa-medium animate-pulse">Loading...</p>
       </div>
     )
   }
@@ -93,13 +93,13 @@ export default function RateSpotPage() {
       <div className="flex min-h-[60dvh] items-center justify-center">
         <div className="text-center">
           <p className="text-4xl mb-3">😕</p>
-          <p className="text-lg font-semibold text-papusa-brown">Spot not found</p>
-          <p className="mt-1 text-sm text-papusa-medium">
+          <p className="text-lg font-semibold text-pupusa-brown">Spot not found</p>
+          <p className="mt-1 text-sm text-pupusa-medium">
             This spot doesn&apos;t exist or the session is invalid
           </p>
           <button
             onClick={() => router.push(`/session/${code}`)}
-            className="mt-4 inline-block rounded-xl bg-papusa-gold px-6 py-2.5 text-sm font-semibold text-papusa-dark"
+            className="mt-4 inline-block rounded-xl bg-pupusa-gold px-6 py-2.5 text-sm font-semibold text-pupusa-dark"
           >
             Go Back
           </button>
@@ -115,7 +115,7 @@ export default function RateSpotPage() {
       {/* Back button */}
       <button
         onClick={() => router.push(`/session/${code}`)}
-        className="inline-flex items-center gap-1 text-sm text-papusa-medium hover:text-papusa-brown mb-4"
+        className="inline-flex items-center gap-1 text-sm text-pupusa-medium hover:text-pupusa-brown mb-4"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -127,9 +127,9 @@ export default function RateSpotPage() {
       <div className="mb-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-papusa-brown">{spot.name}</h1>
+            <h1 className="text-2xl font-bold text-pupusa-brown">{spot.name}</h1>
             {spot.address && (
-              <p className="mt-1 text-sm text-papusa-medium">{spot.address}</p>
+              <p className="mt-1 text-sm text-pupusa-medium">{spot.address}</p>
             )}
           </div>
           {overallAvg !== null && (
@@ -137,7 +137,7 @@ export default function RateSpotPage() {
               <span className={`text-3xl font-bold ${getScoreColor(overallAvg)}`}>
                 {formatScore(overallAvg)}
               </span>
-              <p className="text-xs text-papusa-light">avg</p>
+              <p className="text-xs text-pupusa-light">avg</p>
             </div>
           )}
         </div>
@@ -153,17 +153,17 @@ export default function RateSpotPage() {
           return (
             <div
               key={factor.key}
-              className="rounded-2xl border border-papusa-border bg-papusa-surface p-4"
+              className="rounded-2xl border border-pupusa-border bg-pupusa-surface p-4"
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <span className="text-2xl">{factor.emoji}</span>
-                  <span className="text-lg font-semibold text-papusa-brown">
+                  <span className="text-lg font-semibold text-pupusa-brown">
                     {factor.label}
                   </span>
                 </div>
                 {avgRounded && (
-                  <span className="text-sm text-papusa-medium">
+                  <span className="text-sm text-pupusa-medium">
                     Avg: <span className="font-semibold">{avgRounded}</span>
                   </span>
                 )}
@@ -176,7 +176,7 @@ export default function RateSpotPage() {
                   onChange={(score) => handleRate(factor.key, score)}
                   size="lg"
                 />
-                <span className="text-sm text-papusa-light">
+                <span className="text-sm text-pupusa-light">
                   {myScore > 0 ? `You: ${myScore}/5` : 'Tap to rate'}
                 </span>
               </div>
@@ -187,10 +187,10 @@ export default function RateSpotPage() {
                 return (
                   <div
                     key={p.id}
-                    className="flex items-center justify-between mt-2 pt-2 border-t border-papusa-border/50"
+                    className="flex items-center justify-between mt-2 pt-2 border-t border-pupusa-border/50"
                   >
                     <StarRating value={theirScore} readonly size="md" />
-                    <span className="text-sm text-papusa-light">
+                    <span className="text-sm text-pupusa-light">
                       {theirScore > 0 ? `${p.name}: ${theirScore}/5` : `${p.name}: —`}
                     </span>
                   </div>
@@ -205,7 +205,7 @@ export default function RateSpotPage() {
       <div className="mt-6 mb-8">
         <button
           onClick={() => router.push(`/session/${code}`)}
-          className="w-full rounded-2xl bg-papusa-gold py-4 text-lg font-semibold text-papusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-papusa-gold-hover transition-colors"
+          className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover transition-colors"
         >
           Done
         </button>

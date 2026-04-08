@@ -13,7 +13,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'RateMyPapusa',
+  title: 'RateMyPupusa',
   description: 'Rate and rank pupusa spots in DC with friends',
 }
 

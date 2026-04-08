@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-papusa-gold: #F59E0B;
-  --color-papusa-gold-hover: #D97706;
-  --color-papusa-gold-active: #B45309;
-  --color-papusa-orange: #EA580C;
-  --color-papusa-cream: #FEF3C7;
-  --color-papusa-warm-white: #FFFBEB;
-  --color-papusa-surface: #FEF9EE;
-  --color-papusa-border: #FDE68A;
-  --color-papusa-brown: #92400E;
-  --color-papusa-brown-light: #A0845C;
-  --color-papusa-dark: #1C1917;
-  --color-papusa-medium: #57534E;
-  --color-papusa-light: #A8A29E;
-  --color-papusa-star-inactive: #D6D3D1;
+  --color-pupusa-gold: #F59E0B;
+  --color-pupusa-gold-hover: #D97706;
+  --color-pupusa-gold-active: #B45309;
+  --color-pupusa-orange: #EA580C;
+  --color-pupusa-cream: #FEF3C7;
+  --color-pupusa-warm-white: #FFFBEB;
+  --color-pupusa-surface: #FEF9EE;
+  --color-pupusa-border: #FDE68A;
+  --color-pupusa-brown: #92400E;
+  --color-pupusa-brown-light: #A0845C;
+  --color-pupusa-dark: #1C1917;
+  --color-pupusa-medium: #57534E;
+  --color-pupusa-light: #A8A29E;
+  --color-pupusa-star-inactive: #D6D3D1;
   --color-score-high: #16A34A;
   --color-score-mid: #CA8A04;
   --color-score-low: #DC2626;
@@ -24,8 +24,8 @@
 }
 
 body {
-  background-color: var(--color-papusa-warm-white);
-  color: var(--color-papusa-dark);
+  background-color: var(--color-pupusa-warm-white);
+  color: var(--color-pupusa-dark);
 }
 
 /* Star rating tap animation */
@@ -56,8 +56,8 @@ body {
 
 /* Share code dashed border */
 .share-code-box {
-  border: 2px dashed var(--color-papusa-border);
-  background: var(--color-papusa-cream);
+  border: 2px dashed var(--color-pupusa-border);
+  background: var(--color-pupusa-cream);
   border-radius: 12px;
 }
 

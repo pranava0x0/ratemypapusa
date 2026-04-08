@@ -12,10 +12,10 @@ describe('StarRating', () => {
     const { container } = render(<StarRating value={3} readonly />)
     const svgs = container.querySelectorAll('svg')
     const filled = Array.from(svgs).filter(
-      (svg) => svg.getAttribute('fill') === 'var(--color-papusa-gold)'
+      (svg) => svg.getAttribute('fill') === 'var(--color-pupusa-gold)'
     )
     const unfilled = Array.from(svgs).filter(
-      (svg) => svg.getAttribute('fill') === 'var(--color-papusa-star-inactive)'
+      (svg) => svg.getAttribute('fill') === 'var(--color-pupusa-star-inactive)'
     )
     expect(filled).toHaveLength(3)
     expect(unfilled).toHaveLength(2)

@@ -12,7 +12,7 @@ describe('SessionHeader', () => {
 
   it('renders a home link to /', () => {
     render(<SessionHeader {...defaultProps} />)
-    const homeLink = screen.getByText('RateMyPapusa').closest('a')
+    const homeLink = screen.getByText('RateMyPupusa').closest('a')
     expect(homeLink).toHaveAttribute('href', '/')
   })
 

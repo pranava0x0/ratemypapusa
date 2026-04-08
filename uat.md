@@ -1,11 +1,11 @@
-# UAT Baseline — RateMyPapusa
+# UAT Baseline — RateMyPupusa
 
 _Created: 2026-04-07_
 _Last run: 2026-04-07_
 
 ## Project Info
 - **Stack**: Next.js 16 (App Router) + Tailwind v4 + TypeScript + Supabase
-- **Live URL**: https://ratemypapusa.vercel.app
+- **Live URL**: https://ratemypupusa.vercel.app
 - **Dev server**: `npm run dev` → http://localhost:3000
 - **Entry point**: `app/page.tsx`
 - **Key routes**:

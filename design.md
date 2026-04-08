@@ -1,8 +1,8 @@
-# RateMyPapusa — Design System
+# RateMyPupusa — Design System
 
 ## Visual Theme & Atmosphere
 
-RateMyPapusa is a warm, inviting app that celebrates Salvadoran street food culture. The design evokes the feeling of walking through DC's pupusa corridor — warm tortilla tones, vibrant salsa reds, and curtido greens. The aesthetic is casual and communal, matching the act of eating pupusas with friends and debating which spot reigns supreme.
+RateMyPupusa is a warm, inviting app that celebrates Salvadoran street food culture. The design evokes the feeling of walking through DC's pupusa corridor — warm tortilla tones, vibrant salsa reds, and curtido greens. The aesthetic is casual and communal, matching the act of eating pupusas with friends and debating which spot reigns supreme.
 
 Key characteristics:
 - **Warm color temperature** — golden yellows, burnt oranges, and earthy browns
@@ -17,8 +17,8 @@ Key characteristics:
 ### Primary
 | Name | Hex | Usage |
 |------|-----|-------|
-| Papusa Gold | `#F59E0B` | Primary actions, star ratings, active states |
-| Papusa Orange | `#EA580C` | Accent highlights, top rankings, CTAs |
+| Pupusa Gold | `#F59E0B` | Primary actions, star ratings, active states |
+| Pupusa Orange | `#EA580C` | Accent highlights, top rankings, CTAs |
 | Masa Cream | `#FEF3C7` | Card backgrounds, warm surfaces |
 
 ### Secondary & Accent
@@ -111,7 +111,7 @@ Key characteristics:
 ### Star Rating
 
 - Inactive star: `#D6D3D1` (stone-300)
-- Active star: `#F59E0B` (Papusa Gold)
+- Active star: `#F59E0B` (Pupusa Gold)
 - Hover star: `#FBBF24` (amber-400)
 - Size: `32px` (interactive), `20px` (readonly display)
 - Tap target: minimum `44px × 44px`

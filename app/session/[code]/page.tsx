@@ -110,7 +110,7 @@ export default function SessionPage() {
       <div className="flex min-h-[60dvh] items-center justify-center">
         <div className="text-center">
           <p className="text-4xl mb-3 animate-pulse">🫓</p>
-          <p className="text-papusa-medium">Loading session...</p>
+          <p className="text-pupusa-medium">Loading session...</p>
         </div>
       </div>
     )
@@ -122,13 +122,13 @@ export default function SessionPage() {
       <div className="flex min-h-[60dvh] items-center justify-center">
         <div className="text-center">
           <p className="text-4xl mb-3">😕</p>
-          <p className="text-lg font-semibold text-papusa-brown">Session not found</p>
-          <p className="mt-1 text-sm text-papusa-medium">
+          <p className="text-lg font-semibold text-pupusa-brown">Session not found</p>
+          <p className="mt-1 text-sm text-pupusa-medium">
             Check the code and try again
           </p>
           <a
             href="/"
-            className="mt-4 inline-block rounded-xl bg-papusa-gold px-6 py-2.5 text-sm font-semibold text-papusa-dark"
+            className="mt-4 inline-block rounded-xl bg-pupusa-gold px-6 py-2.5 text-sm font-semibold text-pupusa-dark"
           >
             Go Home
           </a>
@@ -144,14 +144,14 @@ export default function SessionPage() {
         <ToastContainer toasts={toasts} onDismiss={dismissToast} />
         <div className="text-center mb-6">
           <p className="text-4xl mb-3">🫓</p>
-          <h1 className="text-2xl font-bold text-papusa-brown">{session.name}</h1>
-          <p className="mt-1 text-sm text-papusa-medium">
+          <h1 className="text-2xl font-bold text-pupusa-brown">{session.name}</h1>
+          <p className="mt-1 text-sm text-pupusa-medium">
             {participants.length} taster{participants.length !== 1 ? 's' : ''} already in
           </p>
         </div>
         <form onSubmit={handleJoinSubmit} className="w-full space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-papusa-brown mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-pupusa-brown mb-1">
               Your Name
             </label>
             <input
@@ -160,7 +160,7 @@ export default function SessionPage() {
               value={joinName}
               onChange={(e) => setJoinName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full rounded-xl border border-papusa-border bg-papusa-surface px-4 py-3 text-papusa-dark placeholder:text-papusa-light focus:border-papusa-gold focus:outline-none focus:ring-2 focus:ring-papusa-gold/20"
+              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
               required
               autoFocus
             />
@@ -168,7 +168,7 @@ export default function SessionPage() {
           <button
             type="submit"
             disabled={joining}
-            className="w-full rounded-2xl bg-papusa-gold py-4 text-lg font-semibold text-papusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-papusa-gold-hover disabled:opacity-50 transition-colors"
+            className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
           >
             {joining ? 'Joining...' : 'Join Session'}
           </button>
@@ -190,13 +190,13 @@ export default function SessionPage() {
       <ShareCode code={code} />
 
       {/* Tab bar */}
-      <div className="mt-6 flex rounded-xl bg-papusa-cream p-1">
+      <div className="mt-6 flex rounded-xl bg-pupusa-cream p-1">
         <button
           onClick={() => setTab('spots')}
           className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-colors ${
             tab === 'spots'
-              ? 'bg-white text-papusa-brown shadow-sm'
-              : 'text-papusa-medium hover:text-papusa-brown'
+              ? 'bg-white text-pupusa-brown shadow-sm'
+              : 'text-pupusa-medium hover:text-pupusa-brown'
           }`}
         >
           Rate Spots
@@ -205,8 +205,8 @@ export default function SessionPage() {
           onClick={() => setTab('leaderboard')}
           className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-colors ${
             tab === 'leaderboard'
-              ? 'bg-white text-papusa-brown shadow-sm'
-              : 'text-papusa-medium hover:text-papusa-brown'
+              ? 'bg-white text-pupusa-brown shadow-sm'
+              : 'text-pupusa-medium hover:text-pupusa-brown'
           }`}
         >
           Leaderboard
@@ -220,7 +220,7 @@ export default function SessionPage() {
             {ratingsLoading ? (
               <div className="space-y-3">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-24 rounded-2xl bg-papusa-cream animate-pulse" />
+                  <div key={i} className="h-24 rounded-2xl bg-pupusa-cream animate-pulse" />
                 ))}
               </div>
             ) : (
@@ -236,7 +236,7 @@ export default function SessionPage() {
                 ))}
                 <button
                   onClick={() => setShowAddSpot(true)}
-                  className="w-full rounded-2xl border-2 border-dashed border-papusa-border py-4 text-sm font-semibold text-papusa-medium hover:border-papusa-gold hover:text-papusa-brown transition-colors"
+                  className="w-full rounded-2xl border-2 border-dashed border-pupusa-border py-4 text-sm font-semibold text-pupusa-medium hover:border-pupusa-gold hover:text-pupusa-brown transition-colors"
                 >
                   + Add a Spot
                 </button>
