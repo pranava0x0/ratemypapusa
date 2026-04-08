@@ -2,7 +2,7 @@ import { RATING_FACTORS } from '@/lib/constants'
 import { RatingFactor } from '@/lib/types'
 
 describe('RATING_FACTORS label lookup (UAT-005)', () => {
-  const factors: RatingFactor[] = ['taste', 'texture', 'filling', 'value', 'authenticity', 'overall']
+  const factors: RatingFactor[] = ['taste', 'value', 'curtido', 'other']
 
   it.each(factors)('has a capitalized label for factor key "%s"', (key) => {
     const config = RATING_FACTORS.find((f) => f.key === key)

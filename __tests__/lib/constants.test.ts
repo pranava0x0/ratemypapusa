@@ -1,8 +1,8 @@
 import { RATING_FACTORS, ALL_FACTORS, SHARE_CODE_CHARS } from '@/lib/constants'
 
 describe('RATING_FACTORS', () => {
-  it('has exactly 6 entries', () => {
-    expect(RATING_FACTORS).toHaveLength(6)
+  it('has exactly 4 entries', () => {
+    expect(RATING_FACTORS).toHaveLength(4)
   })
 
   it('each entry has key, label, and emoji', () => {
@@ -25,11 +25,9 @@ describe('ALL_FACTORS', () => {
 
   it('contains the expected factor names', () => {
     expect(ALL_FACTORS).toContain('taste')
-    expect(ALL_FACTORS).toContain('texture')
-    expect(ALL_FACTORS).toContain('filling')
     expect(ALL_FACTORS).toContain('value')
-    expect(ALL_FACTORS).toContain('authenticity')
-    expect(ALL_FACTORS).toContain('overall')
+    expect(ALL_FACTORS).toContain('curtido')
+    expect(ALL_FACTORS).toContain('other')
   })
 })
 

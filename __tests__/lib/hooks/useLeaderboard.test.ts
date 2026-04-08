@@ -54,14 +54,14 @@ describe('useLeaderboard', () => {
     const ratings = [
       makeRating('a', 'p1', 'taste', 5),
       makeRating('a', 'p2', 'taste', 3),
-      makeRating('a', 'p1', 'filling', 4),
-      makeRating('a', 'p2', 'filling', 2),
+      makeRating('a', 'p1', 'curtido', 4),
+      makeRating('a', 'p2', 'curtido', 2),
     ]
     const { result } = renderHook(() => useLeaderboard(ratings, spots))
 
     const agg = result.current[0]
     expect(agg.averageByFactor.taste).toBe(4) // (5+3)/2
-    expect(agg.averageByFactor.filling).toBe(3) // (4+2)/2
+    expect(agg.averageByFactor.curtido).toBe(3) // (4+2)/2
     expect(agg.raterCount).toBe(2)
     // Overall = average of factor averages = (4 + 3) / 2 = 3.5
     expect(agg.overallAverage).toBe(3.5)

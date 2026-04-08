@@ -12,7 +12,7 @@ function makeAggregate(
   raterCount: number,
   factorOverrides: Partial<Record<RatingFactor, number | null>> = {}
 ): SpotAggregate {
-  const factors: RatingFactor[] = ['taste', 'texture', 'filling', 'value', 'authenticity', 'overall']
+  const factors: RatingFactor[] = ['taste', 'value', 'curtido', 'other']
   const averageByFactor = {} as Record<RatingFactor, number | null>
   for (const f of factors) {
     averageByFactor[f] = factorOverrides[f] ?? (raterCount > 0 ? overallAverage : null)

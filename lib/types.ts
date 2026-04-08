@@ -33,11 +33,9 @@ export interface Rating {
 
 export type RatingFactor =
   | 'taste'
-  | 'texture'
-  | 'filling'
   | 'value'
-  | 'authenticity'
-  | 'overall'
+  | 'curtido'
+  | 'other'
 
 export interface FactorConfig {
   key: RatingFactor
