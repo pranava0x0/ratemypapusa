@@ -6,10 +6,12 @@ import { useSession } from '@/lib/hooks/useSession'
 import { useSpots } from '@/lib/hooks/useSpots'
 import { useRatings } from '@/lib/hooks/useRatings'
 import { useLeaderboard } from '@/lib/hooks/useLeaderboard'
+import { useAuth } from '@/lib/hooks/useAuth'
 import SessionHeader from '@/components/SessionHeader'
 import SpotCard from '@/components/SpotCard'
 import AddSpotModal from '@/components/AddSpotModal'
 import Leaderboard from '@/components/Leaderboard'
+import PhoneAuth from '@/components/PhoneAuth'
 import { ToastContainer, useToasts } from '@/components/Toast'
 
 type Tab = 'spots' | 'leaderboard'
@@ -31,11 +33,13 @@ export default function SessionPage() {
     joinSession,
   } = useSession(code)
 
+  const { user, profile, loading: authLoading, signIn, verifyOtp, updateProfile } = useAuth()
   const { spots, loading: spotsLoading, addSpot } = useSpots()
   const { ratings, loading: ratingsLoading } = useRatings(session?.id)
   const leaderboard = useLeaderboard(ratings, spots)
 
   const [tab, setTabState] = useState<Tab>(tabParam === 'leaderboard' ? 'leaderboard' : 'spots')
+  const needsAuth = !authLoading && !user
 
   const setTab = useCallback((newTab: Tab) => {
     setTabState(newTab)
@@ -50,24 +54,26 @@ export default function SessionPage() {
   }, [code, router])
 
   const [showAddSpot, setShowAddSpot] = useState(false)
-  const [joinName, setJoinName] = useState('')
   const [joining, setJoining] = useState(false)
   const { toasts, addToast, dismissToast } = useToasts()
 
-  // Auto-join if name is in URL params
+  const displayName = profile?.display_name || ''
+
+  // Auto-join when authenticated (via URL name param or profile name)
   useEffect(() => {
-    if (session && !currentParticipant && nameParam) {
+    if (session && !currentParticipant && user && !joining) {
+      const name = nameParam || displayName || 'Anonymous'
       const doJoin = async () => {
         setJoining(true)
-        const success = await joinSession(nameParam)
+        const success = await joinSession(name, user.id)
         if (success) {
-          addToast(`Welcome, ${nameParam}!`, 'success')
+          addToast(`Welcome, ${name}!`, 'success')
         }
         setJoining(false)
       }
       doJoin()
     }
-  }, [session, currentParticipant, nameParam, joinSession, addToast])
+  }, [session, currentParticipant, user, nameParam, displayName, joining, joinSession, addToast])
 
   // Track new participants for toast
   useEffect(() => {
@@ -80,19 +86,6 @@ export default function SessionPage() {
     // Only trigger on participants length change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [participants.length])
-
-  const handleJoinSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!joinName.trim()) return
-    setJoining(true)
-    const success = await joinSession(joinName.trim())
-    if (success) {
-      addToast(`Welcome, ${joinName.trim()}!`, 'success')
-    } else {
-      addToast('Failed to join session', 'error')
-    }
-    setJoining(false)
-  }
 
   const handleAddSpot = async (name: string, address: string) => {
     const spot = await addSpot(name, address)
@@ -136,8 +129,8 @@ export default function SessionPage() {
     )
   }
 
-  // Need to join
-  if (!currentParticipant && !nameParam) {
+  // Need to join — show phone auth if not authenticated, auto-join once authenticated
+  if (!currentParticipant) {
     return (
       <div className="flex min-h-[60dvh] flex-col items-center justify-center">
         <ToastContainer toasts={toasts} onDismiss={dismissToast} />
@@ -148,30 +141,17 @@ export default function SessionPage() {
             {participants.length} taster{participants.length !== 1 ? 's' : ''} already in
           </p>
         </div>
-        <form onSubmit={handleJoinSubmit} className="w-full space-y-4">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-pupusa-brown mb-1">
-              Your Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              value={joinName}
-              onChange={(e) => setJoinName(e.target.value)}
-              placeholder="Enter your name"
-              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
-              required
-              autoFocus
-            />
+
+        {needsAuth && (
+          <PhoneAuth onSendOtp={signIn} onVerifyOtp={verifyOtp} />
+        )}
+
+        {!needsAuth && joining && (
+          <div className="text-center">
+            <p className="text-4xl mb-3 animate-pulse">🫓</p>
+            <p className="text-pupusa-medium">Joining...</p>
           </div>
-          <button
-            type="submit"
-            disabled={joining}
-            className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
-          >
-            {joining ? 'Joining...' : 'Join Session'}
-          </button>
-        </form>
+        )}
       </div>
     )
   }

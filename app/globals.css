@@ -102,3 +102,14 @@ body {
   animation: expand 300ms ease;
   overflow: hidden;
 }
+
+/* Fade-expand animation for auth step transitions */
+@keyframes fade-expand {
+  from { max-height: 0; opacity: 0; transform: translateY(-8px); }
+  to { max-height: 500px; opacity: 1; transform: translateY(0); }
+}
+
+.fade-expand {
+  animation: fade-expand 300ms ease forwards;
+  overflow: hidden;
+}

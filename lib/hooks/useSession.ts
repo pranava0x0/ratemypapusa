@@ -67,6 +67,18 @@ export function useSession(shareCode?: string) {
         }
       }
 
+      // Also check by auth user_id (cross-device identity)
+      if (!storedId) {
+        const { data: { session: authSession } } = await supabase.auth.getSession()
+        if (authSession?.user) {
+          const byUserId = participantsData?.find((p) => p.user_id === authSession.user.id)
+          if (byUserId) {
+            storeParticipantId(shareCode, byUserId.id)
+            setCurrentParticipant(byUserId)
+          }
+        }
+      }
+
       // Subscribe to new participants (unique name to avoid Strict Mode double-mount conflicts)
       channel = supabase
         .channel(`participants-${sessionData.id}-${Date.now()}`)
@@ -101,7 +113,7 @@ export function useSession(shareCode?: string) {
   }, [shareCode])
 
   const createSession = useCallback(
-    async (sessionName: string, creatorName: string, partnerName?: string): Promise<string | null> => {
+    async (sessionName: string, creatorName: string, partnerName?: string, userId?: string): Promise<string | null> => {
       let attempts = 0
       while (attempts < 3) {
         const code = generateShareCode()
@@ -125,7 +137,7 @@ export function useSession(shareCode?: string) {
         // Add creator as first participant
         const { data: participantData, error: participantError } = await supabase
           .from('participants')
-          .insert({ session_id: sessionData.id, name: creatorName })
+          .insert({ session_id: sessionData.id, name: creatorName, user_id: userId ?? null })
           .select()
           .single()
 
@@ -167,7 +179,7 @@ export function useSession(shareCode?: string) {
   )
 
   const joinSession = useCallback(
-    async (name: string): Promise<boolean> => {
+    async (name: string, userId?: string): Promise<boolean> => {
       if (!session) return false
 
       // Check if already joined
@@ -182,7 +194,7 @@ export function useSession(shareCode?: string) {
 
       const { data, error: insertError } = await supabase
         .from('participants')
-        .insert({ session_id: session.id, name })
+        .insert({ session_id: session.id, name, user_id: userId ?? null })
         .select()
         .single()
 

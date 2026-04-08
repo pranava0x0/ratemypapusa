@@ -1,31 +1,44 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useSession } from '@/lib/hooks/useSession'
+import { useAuth } from '@/lib/hooks/useAuth'
+import PhoneAuth from '@/components/PhoneAuth'
 
 type Mode = 'idle' | 'create' | 'join'
 
 export default function Home() {
   const router = useRouter()
   const { createSession } = useSession()
+  const { user, profile, loading: authLoading, signIn, verifyOtp, updateProfile } = useAuth()
+
   const [mode, setMode] = useState<Mode>('idle')
+
+  // Create form
   const [sessionName, setSessionName] = useState('')
-  const [yourName, setYourName] = useState('')
-  const [partnerName, setPartnerName] = useState('')
+
+  // Join form
   const [joinCode, setJoinCode] = useState('')
-  const [joinName, setJoinName] = useState('')
+
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Whether the user needs to authenticate
+  const needsAuth = !authLoading && !user
+
+  // Derive display name from profile
+  const displayName = profile?.display_name || ''
+
   const handleCreate = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!sessionName.trim() || !yourName.trim()) return
+    if (!sessionName.trim()) return
     setLoading(true)
     setError(null)
 
-    const code = await createSession(sessionName.trim(), yourName.trim(), partnerName.trim() || undefined)
+    const name = displayName || 'Anonymous'
+    const code = await createSession(sessionName.trim(), name, undefined, user?.id)
     if (code) {
       router.push(`/session/${code}`)
     } else {
@@ -37,10 +50,12 @@ export default function Home() {
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault()
     const code = joinCode.trim().toUpperCase()
-    if (!code || !joinName.trim()) return
+    if (!code) return
     setLoading(true)
     setError(null)
-    router.push(`/session/${code}?name=${encodeURIComponent(joinName.trim())}`)
+
+    const name = displayName || 'Anonymous'
+    router.push(`/session/${code}?name=${encodeURIComponent(name)}`)
   }
 
   return (
@@ -87,58 +102,43 @@ export default function Home() {
         </div>
       )}
 
-      {/* Create Form */}
+      {/* Create Flow */}
       {mode === 'create' && (
-        <form onSubmit={handleCreate} className="w-full space-y-4">
-          <div>
-            <label htmlFor="session-name" className="block text-sm font-medium text-pupusa-brown mb-1">
-              Session Name
-            </label>
-            <input
-              id="session-name"
-              type="text"
-              value={sessionName}
-              onChange={(e) => setSessionName(e.target.value)}
-              placeholder="e.g., Saturday Pupusa Crawl"
-              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
-              required
-              autoFocus
-            />
-          </div>
-          <div>
-            <label htmlFor="your-name" className="block text-sm font-medium text-pupusa-brown mb-1">
-              Your Name
-            </label>
-            <input
-              id="your-name"
-              type="text"
-              value={yourName}
-              onChange={(e) => setYourName(e.target.value)}
-              placeholder="e.g., Pranav"
-              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="partner-name" className="block text-sm font-medium text-pupusa-brown mb-1">
-              Friend&apos;s Name <span className="text-pupusa-light font-normal">(optional)</span>
-            </label>
-            <input
-              id="partner-name"
-              type="text"
-              value={partnerName}
-              onChange={(e) => setPartnerName(e.target.value)}
-              placeholder="e.g., Maria"
-              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
-          >
-            {loading ? 'Creating...' : 'Create Session'}
-          </button>
+        <div className="w-full space-y-4">
+          {needsAuth ? (
+            <PhoneAuth onSendOtp={signIn} onVerifyOtp={verifyOtp} />
+          ) : (
+            <form onSubmit={handleCreate} className="space-y-4 fade-expand">
+              {displayName && (
+                <p className="text-sm text-pupusa-medium text-center">
+                  Hey, <span className="font-semibold text-pupusa-brown">{displayName}</span>
+                </p>
+              )}
+              <div>
+                <label htmlFor="session-name" className="block text-sm font-medium text-pupusa-brown mb-1">
+                  Session Name
+                </label>
+                <input
+                  id="session-name"
+                  type="text"
+                  value={sessionName}
+                  onChange={(e) => setSessionName(e.target.value)}
+                  placeholder="e.g., Saturday Pupusa Crawl"
+                  className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
+                  required
+                  autoFocus
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
+              >
+                {loading ? 'Creating...' : 'Create Session'}
+              </button>
+            </form>
+          )}
+
           <button
             type="button"
             onClick={() => setMode('idle')}
@@ -146,49 +146,47 @@ export default function Home() {
           >
             Back
           </button>
-        </form>
+        </div>
       )}
 
-      {/* Join Form */}
+      {/* Join Flow */}
       {mode === 'join' && (
-        <form onSubmit={handleJoin} className="w-full space-y-4">
-          <div>
-            <label htmlFor="join-code" className="block text-sm font-medium text-pupusa-brown mb-1">
-              Session Code
-            </label>
-            <input
-              id="join-code"
-              type="text"
-              value={joinCode}
-              onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
-              placeholder="e.g., ABC23"
-              maxLength={5}
-              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 font-mono text-xl tracking-widest text-center text-pupusa-dark placeholder:text-pupusa-light placeholder:text-base placeholder:tracking-normal placeholder:font-sans focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
-              required
-              autoFocus
-            />
-          </div>
-          <div>
-            <label htmlFor="join-name" className="block text-sm font-medium text-pupusa-brown mb-1">
-              Your Name
-            </label>
-            <input
-              id="join-name"
-              type="text"
-              value={joinName}
-              onChange={(e) => setJoinName(e.target.value)}
-              placeholder="e.g., Maria"
-              className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 text-pupusa-dark placeholder:text-pupusa-light focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
-          >
-            {loading ? 'Joining...' : 'Join Session'}
-          </button>
+        <div className="w-full space-y-4">
+          {needsAuth ? (
+            <PhoneAuth onSendOtp={signIn} onVerifyOtp={verifyOtp} />
+          ) : (
+            <form onSubmit={handleJoin} className="space-y-4 fade-expand">
+              {displayName && (
+                <p className="text-sm text-pupusa-medium text-center">
+                  Hey, <span className="font-semibold text-pupusa-brown">{displayName}</span>
+                </p>
+              )}
+              <div>
+                <label htmlFor="join-code" className="block text-sm font-medium text-pupusa-brown mb-1">
+                  Session Code
+                </label>
+                <input
+                  id="join-code"
+                  type="text"
+                  value={joinCode}
+                  onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
+                  placeholder="e.g., ABC23"
+                  maxLength={5}
+                  className="w-full rounded-xl border border-pupusa-border bg-pupusa-surface px-4 py-3 font-mono text-xl tracking-widest text-center text-pupusa-dark placeholder:text-pupusa-light placeholder:text-base placeholder:tracking-normal placeholder:font-sans focus:border-pupusa-gold focus:outline-none focus:ring-2 focus:ring-pupusa-gold/20"
+                  required
+                  autoFocus
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-2xl bg-pupusa-gold py-4 text-lg font-semibold text-pupusa-dark shadow-[0_2px_8px_rgba(245,158,11,0.3)] hover:bg-pupusa-gold-hover disabled:opacity-50 transition-colors"
+              >
+                {loading ? 'Joining...' : 'Join Session'}
+              </button>
+            </form>
+          )}
+
           <button
             type="button"
             onClick={() => setMode('idle')}
@@ -196,7 +194,7 @@ export default function Home() {
           >
             Back
           </button>
-        </form>
+        </div>
       )}
     </div>
   )

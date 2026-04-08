@@ -17,6 +17,14 @@ export interface Participant {
   id: string
   session_id: string
   name: string
+  user_id: string | null
+  created_at: string
+}
+
+export interface Profile {
+  id: string
+  phone: string
+  display_name: string
   created_at: string
 }
 
