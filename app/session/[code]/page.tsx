@@ -49,6 +49,7 @@ export default function SessionPage() {
     const qs = params.toString()
     router.replace(`/session/${code}${qs ? `?${qs}` : ''}`, { scroll: false })
   }, [code, router])
+
   const [showAddSpot, setShowAddSpot] = useState(false)
   const [joinName, setJoinName] = useState('')
   const [joining, setJoining] = useState(false)
@@ -247,7 +248,8 @@ export default function SessionPage() {
         {tab === 'leaderboard' && (
           <Leaderboard
             aggregates={leaderboard}
-            totalParticipants={participants.length}
+            participants={participants}
+            ratings={ratings}
           />
         )}
       </div>

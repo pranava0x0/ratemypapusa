@@ -9,6 +9,7 @@ import { RATING_FACTORS } from '@/lib/constants'
 import { Spot, RatingFactor } from '@/lib/types'
 import StarRating from '@/components/StarRating'
 import { ToastContainer, useToasts } from '@/components/Toast'
+import { formatScore, getScoreColor } from '@/lib/utils'
 
 export default function RateSpotPage() {
   const params = useParams()
@@ -16,7 +17,7 @@ export default function RateSpotPage() {
   const code = params.code as string
   const spotId = params.spotId as string
 
-  const { session, currentParticipant, loading: sessionLoading } = useSession(code)
+  const { session, participants, currentParticipant, loading: sessionLoading } = useSession(code)
   const { ratings, submitRating } = useRatings(session?.id)
   const { toasts, addToast, dismissToast } = useToasts()
 
@@ -48,22 +49,36 @@ export default function RateSpotPage() {
     }
   }
 
-  // Get current user's ratings for this spot
-  const myRatings = ratings.filter(
-    (r) => r.spot_id === spotId && r.participant_id === currentParticipant?.id
-  )
+  // All ratings for this spot
+  const allSpotRatings = ratings.filter((r) => r.spot_id === spotId)
 
-  const getMyScore = (factor: RatingFactor): number => {
-    return myRatings.find((r) => r.factor === factor)?.score ?? 0
+  // Get a specific participant's score for a factor
+  const getParticipantScore = (participantId: string, factor: RatingFactor): number => {
+    return allSpotRatings.find(
+      (r) => r.participant_id === participantId && r.factor === factor
+    )?.score ?? 0
   }
 
-  // Compute averages from all participants
-  const allSpotRatings = ratings.filter((r) => r.spot_id === spotId)
+  // Compute average across all participants for a factor
   const getAvgScore = (factor: RatingFactor): number | null => {
     const factorRatings = allSpotRatings.filter((r) => r.factor === factor)
     if (factorRatings.length === 0) return null
     return factorRatings.reduce((sum, r) => sum + r.score, 0) / factorRatings.length
   }
+
+  // Overall average across all factors
+  const overallAvg = (() => {
+    const avgs = RATING_FACTORS.map((f) => getAvgScore(f.key)).filter(
+      (v): v is number => v !== null
+    )
+    if (avgs.length === 0) return null
+    return avgs.reduce((sum, v) => sum + v, 0) / avgs.length
+  })()
+
+  // Other participants (not the current user)
+  const otherParticipants = participants.filter(
+    (p) => p.id !== currentParticipant?.id
+  )
 
   if (sessionLoading || spotLoading) {
     return (
@@ -110,16 +125,28 @@ export default function RateSpotPage() {
 
       {/* Spot header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-papusa-brown">{spot.name}</h1>
-        {spot.address && (
-          <p className="mt-1 text-sm text-papusa-medium">{spot.address}</p>
-        )}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-papusa-brown">{spot.name}</h1>
+            {spot.address && (
+              <p className="mt-1 text-sm text-papusa-medium">{spot.address}</p>
+            )}
+          </div>
+          {overallAvg !== null && (
+            <div className="text-center shrink-0">
+              <span className={`text-3xl font-bold ${getScoreColor(overallAvg)}`}>
+                {formatScore(overallAvg)}
+              </span>
+              <p className="text-xs text-papusa-light">avg</p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Rating factors */}
       <div className="space-y-5">
         {RATING_FACTORS.map((factor) => {
-          const myScore = getMyScore(factor.key)
+          const myScore = getParticipantScore(currentParticipant.id, factor.key)
           const avgScore = getAvgScore(factor.key)
           const avgRounded = avgScore !== null ? avgScore.toFixed(1) : null
 
@@ -142,6 +169,7 @@ export default function RateSpotPage() {
                 )}
               </div>
 
+              {/* Current user's rating */}
               <div className="flex items-center justify-between">
                 <StarRating
                   value={myScore}
@@ -152,6 +180,22 @@ export default function RateSpotPage() {
                   {myScore > 0 ? `You: ${myScore}/5` : 'Tap to rate'}
                 </span>
               </div>
+
+              {/* Other participants' ratings */}
+              {otherParticipants.map((p) => {
+                const theirScore = getParticipantScore(p.id, factor.key)
+                return (
+                  <div
+                    key={p.id}
+                    className="flex items-center justify-between mt-2 pt-2 border-t border-papusa-border/50"
+                  >
+                    <StarRating value={theirScore} readonly size="md" />
+                    <span className="text-sm text-papusa-light">
+                      {theirScore > 0 ? `${p.name}: ${theirScore}/5` : `${p.name}: —`}
+                    </span>
+                  </div>
+                )
+              })}
             </div>
           )
         })}
