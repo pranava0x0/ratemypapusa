@@ -16,7 +16,7 @@ describe('Mobile responsiveness', () => {
     it('renders participant names and share code in compact layout', () => {
       render(
         <SessionHeader
-          sessionName="Saturday Pupusa Crawl"
+          sessionName="Saturday Pupusa Tour"
           shareCode="ABC12"
           participants={participants}
         />
