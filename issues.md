@@ -1,6 +1,6 @@
 # Issues Log
 
-_Last updated: 2026-05-11_
+_Last updated: 2026-05-12_
 
 ---
 
@@ -39,6 +39,17 @@ _Last updated: 2026-05-11_
 ---
 
 ## Resolved Issues
+
+### [UAT-014] Production OTP sending failed due to paused Supabase project
+- **Severity**: critical
+- **Page/Section**: `/` — phone auth (Send Code)
+- **Discovered**: 2026-05-12
+- **Resolved**: 2026-05-12
+- **Status**: fixed
+- **Root Cause**: Infrastructure — Supabase free-tier projects auto-pause after ~1 week of inactivity. DNS for `fbjnafeamrmejporunjn.supabase.co` stopped resolving, so every Vercel serverless call failed with `TypeError: fetch failed / getaddrinfo`. This surfaced as "Failed to send verification code" in the UI.
+- **Fix**: Restored the project via the Supabase dashboard (Project Settings → Resume project). To prevent recurrence: keep the project active with regular traffic, or upgrade to Supabase Pro.
+
+---
 
 ### [UAT-013] Auth loading spinner stuck when Supabase can't refresh a stale token
 - **Severity**: critical
