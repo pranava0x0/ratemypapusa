@@ -1,6 +1,6 @@
 # Issues Log
 
-_Last updated: 2026-04-08_
+_Last updated: 2026-05-11_
 
 ---
 
@@ -39,6 +39,28 @@ _Last updated: 2026-04-08_
 ---
 
 ## Resolved Issues
+
+### [UAT-012] Leaderboard component tests used stale interface and wrong factor list
+- **Severity**: high
+- **Page/Section**: `__tests__/components/Leaderboard.test.tsx`
+- **Discovered**: 2026-05-11
+- **Resolved**: 2026-05-11
+- **Status**: fixed
+- **Root Cause**: Test bug — tests used `totalParticipants: number` (old prop) instead of `participants: Participant[]` and `ratings: Rating[]`. Also referenced 6 obsolete rating factors instead of the 4 current ones (`taste`, `value`, `curtido`, `other`). Empty state assertion expected "No ratings yet" but component renders "No spots yet". All 7 Leaderboard tests were failing.
+- **Fix**: Rewrote `__tests__/components/Leaderboard.test.tsx` to use correct props and factor list. All 7 tests now pass.
+
+---
+
+### [UAT-011] Create/join crawl form renders prematurely during auth loading
+- **Severity**: high
+- **Page/Section**: `/` (home page, create and join flows)
+- **Discovered**: 2026-05-11
+- **Resolved**: 2026-05-11
+- **Status**: fixed
+- **Root Cause**: Code bug — `needsAuth = !authLoading && !user` and `needsName = !authLoading && !!user && !profile?.display_name` both evaluate to `false` when `authLoading=true` (initial state). This caused the create/join form to appear immediately, before `getUser()` resolved. Users clicking "Create Crawl" at this moment would have `user?.id=undefined`, causing Supabase RLS to reject the insert with "Failed to create crawl."
+- **Fix**: Added an `authLoading` spinner guard in `app/page.tsx` between the `needsAuth` and `needsName` checks in both the create and join flow blocks. The form now waits until auth resolves before showing.
+
+---
 
 ### [UAT-008] "Tap to rate" / "You: X/5" text wraps awkwardly on narrow viewports (375px–393px)
 - **Severity**: medium

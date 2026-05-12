@@ -1,7 +1,7 @@
 # UAT Baseline — RateMyPupusa
 
 _Created: 2026-04-07_
-_Last run: 2026-04-08_
+_Last run: 2026-05-11_
 
 ## Project Info
 - **Stack**: Next.js 16 (App Router) + Tailwind v4 + TypeScript + Supabase
@@ -25,8 +25,8 @@ _Last run: 2026-04-08_
 ## Sections & Last Tested
 | Section | Last Tested | Notes |
 |---------|-------------|-------|
-| Landing page | 2026-04-08 | Stable — clean layout at all viewports |
-| Create session form | 2026-04-08 | Stable — validation works, redirect correct |
+| Landing page | 2026-05-11 | Stable — auth loading guard added (UAT-011 fixed) |
+| Create session form | 2026-05-11 | Stable — now waits for auth before rendering form |
 | Session dashboard | 2026-04-08 | Stable — 12 spots, share code, tabs, URL param persists |
 | Rate spot page | 2026-04-08 | Stable — text stacked below stars, no wrapping (UAT-008 fixed) |
 | Leaderboard tab | 2026-04-08 | Stable — ranked/unrated separation, expand/collapse works |
