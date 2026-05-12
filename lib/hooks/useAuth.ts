@@ -27,19 +27,31 @@ export function useAuth() {
   useEffect(() => {
     let mounted = true
 
-    supabase.auth.getUser().then(({ data: { user: u } }) => {
-      if (!mounted) return
-      setUser(u)
-      if (u) {
-        fetchProfile(u.id).then(() => {
-          if (mounted) setLoading(false)
-        })
-      } else {
-        setLoading(false)
-      }
-    })
+    // Safety net: if getUser() hangs indefinitely (stale token + network error
+    // causes Supabase to retry forever), resolve loading after 8s so the user
+    // sees the form instead of a stuck spinner.
+    const timeout = setTimeout(() => {
+      if (mounted) setLoading(false)
+    }, 8000)
 
-    return () => { mounted = false }
+    supabase.auth.getUser()
+      .then(({ data: { user: u } }) => {
+        if (!mounted) return
+        setUser(u)
+        if (u) return fetchProfile(u.id)
+      })
+      .catch(() => {
+        // Network error or stale token refresh failure — treat as unauthenticated
+      })
+      .finally(() => {
+        clearTimeout(timeout)
+        if (mounted) setLoading(false)
+      })
+
+    return () => {
+      mounted = false
+      clearTimeout(timeout)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
