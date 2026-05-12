@@ -27,12 +27,23 @@ export function useAuth() {
   useEffect(() => {
     let mounted = true
 
-    // Safety net: if getUser() hangs indefinitely (stale token + network error
-    // causes Supabase to retry forever), resolve loading after 8s so the user
-    // sees the form instead of a stuck spinner.
+    // Fast path: if no Supabase session cookie exists the user is definitely
+    // unauthenticated — skip the network call and resolve immediately.
+    // Supabase SSR stores session cookies with the 'sb-' prefix.
+    const hasSessionCookie = document.cookie.split(';').some(
+      c => c.trim().startsWith('sb-')
+    )
+    if (!hasSessionCookie) {
+      setLoading(false)
+      return
+    }
+
+    // Session cookie found — verify it with the server.
+    // Safety net: resolve loading after 5s even if getUser() never completes
+    // (happens when Supabase retries a stale-token refresh indefinitely).
     const timeout = setTimeout(() => {
       if (mounted) setLoading(false)
-    }, 8000)
+    }, 5000)
 
     supabase.auth.getUser()
       .then(({ data: { user: u } }) => {
@@ -41,7 +52,7 @@ export function useAuth() {
         if (u) return fetchProfile(u.id)
       })
       .catch(() => {
-        // Network error or stale token refresh failure — treat as unauthenticated
+        // Network error or stale token — treat as unauthenticated
       })
       .finally(() => {
         clearTimeout(timeout)
