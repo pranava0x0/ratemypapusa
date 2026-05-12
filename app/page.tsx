@@ -123,6 +123,10 @@ export default function Home() {
         <div className="w-full space-y-4">
           {needsAuth ? (
             <PhoneAuth onSendOtp={signIn} onVerifyOtp={verifyOtp} />
+          ) : authLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <p className="text-4xl animate-pulse">🫓</p>
+            </div>
           ) : needsName ? (
             <form onSubmit={handleSetName} className="space-y-4 fade-expand">
               <p className="text-sm text-pupusa-medium text-center">
@@ -198,6 +202,10 @@ export default function Home() {
         <div className="w-full space-y-4">
           {needsAuth ? (
             <PhoneAuth onSendOtp={signIn} onVerifyOtp={verifyOtp} />
+          ) : authLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <p className="text-4xl animate-pulse">🫓</p>
+            </div>
           ) : needsName ? (
             <form onSubmit={handleSetName} className="space-y-4 fade-expand">
               <p className="text-sm text-pupusa-medium text-center">
