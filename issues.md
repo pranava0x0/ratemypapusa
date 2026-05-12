@@ -40,6 +40,17 @@ _Last updated: 2026-05-11_
 
 ## Resolved Issues
 
+### [UAT-013] Auth loading spinner stuck when Supabase can't refresh a stale token
+- **Severity**: critical
+- **Page/Section**: `/` — create and join crawl flows
+- **Discovered**: 2026-05-11
+- **Resolved**: 2026-05-11
+- **Status**: fixed
+- **Root Cause**: Code bug — `useAuth.ts` had no `.catch()` on `supabase.auth.getUser()` and no timeout. When the Supabase client tries to `_recoverAndRefresh` a stale token and hits a network error, it enters an internal retry loop that never rejects — so `setLoading(false)` was never called, trapping the user on the spinner indefinitely.
+- **Fix**: Added `.catch()` + `.finally()` to the `getUser()` chain in `lib/hooks/useAuth.ts` to guarantee `setLoading(false)` fires on any error. Added an 8s `setTimeout` safety net for the case where `getUser()` hangs in the Supabase retry loop without ever rejecting. After 8s, `authLoading` resolves to `false` and the user sees the phone auth form.
+
+---
+
 ### [UAT-012] Leaderboard component tests used stale interface and wrong factor list
 - **Severity**: high
 - **Page/Section**: `__tests__/components/Leaderboard.test.tsx`
