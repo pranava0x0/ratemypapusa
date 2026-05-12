@@ -35,3 +35,18 @@ To test the full flow locally:
 2. Clear cookies/localStorage for `localhost:3000`
 3. Use test phone `5555550101` to create a session
 4. Clear cookies again, use `5555550102` to join via the share code
+
+# UAT
+
+A project-specific UAT skill lives at `~/.claude/skills/ratemypupusa-uat.md`. Invoke it as `/ratemypupusa-uat` from any Claude Code session in this project.
+
+The skill runs the full create/join/rate/leaderboard lifecycle and enforces a mandatory **Start New Crawl smoke test (SF-01)** on every run — that flow breaking was the highest-impact regression this app has had. The skill also knows about the lightningcss worktree gotcha, the Preview MCP network-isolation limitation, and the correct 4-factor rating schema (taste · value · curtido · other).
+
+**Rating factors (exactly 4):** `taste` · `value` · `curtido` · `other`
+Defined in `lib/constants.ts`. Never reference the old 6-factor schema.
+
+**Auth loading guard:** `app/page.tsx` shows a loading spinner while `authLoading=true`. If the create/join form or phone input appears immediately on clicking "Start New Crawl" (before auth resolves), that is a critical regression — the spinner must appear first.
+
+**Dev server config:** `.claude/launch.json` configures the Preview MCP to run `npm run dev` on port 3000. Use `preview_start: name "dev"` to start it.
+
+**Worktree note:** If the dev server 500s with `Cannot find module '../lightningcss.darwin-arm64.node'`, run `npm install lightningcss --no-save` and clear `.next/` before restarting.
